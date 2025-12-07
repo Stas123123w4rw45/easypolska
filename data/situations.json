@@ -1,7 +1,7 @@
 [
     {
-        "title": "At Żabka (Convenience Store)",
-        "description": "You need to buy water, ask for the price, and request a receipt. Learn essential shopping vocabulary.",
+        "title": "У Żabka (Магазин)",
+        "description": "Тобі потрібно купити воду, запитати про ціну та попросити чек. Вивчи основний словник для покупок.",
         "level": "A1",
         "context_prompt": "A customer shopping at a Żabka convenience store in Poland, buying basic items and asking for receipt",
         "is_active": true,
@@ -14,8 +14,8 @@
         ]
     },
     {
-        "title": "Ordering Uber",
-        "description": "Confirm your pickup location and destination with the driver. Practice giving addresses and directions.",
+        "title": "Замовлення Uber",
+        "description": "Підтверди місце посадки та пункт призначення з водієм. Попрактикуйся у наданні адрес та вказівок.",
         "level": "A1",
         "context_prompt": "A passenger confirming pickup location and destination address with an Uber driver in Polish",
         "is_active": true,
@@ -29,8 +29,8 @@
         ]
     },
     {
-        "title": "At the Restaurant",
-        "description": "Order food and drinks, ask for recommendations, and request the bill.",
+        "title": "В Ресторані",
+        "description": "Замов їжу та напої, попроси рекомендації та попроси рахунок.",
         "level": "A2",
         "context_prompt": "A customer at a Polish restaurant ordering food, asking for recommendations, and requesting the bill",
         "is_active": true,
@@ -44,8 +44,8 @@
         ]
     },
     {
-        "title": "At the Post Office (Poczta)",
-        "description": "Send a package or letter, buy stamps, and ask about delivery times.",
+        "title": "На Пошті (Poczta)",
+        "description": "Відправ посилку або лист, купи марки та запитай про терміни доставки.",
         "level": "A2",
         "context_prompt": "A customer at a Polish post office sending a package internationally and asking about delivery",
         "is_active": true,
@@ -59,8 +59,8 @@
         ]
     },
     {
-        "title": "Buying Train Tickets",
-        "description": "Purchase train tickets at a station, ask about platforms and departure times.",
+        "title": "Купівля Квитків на Поїзд",
+        "description": "Придбай квитки на поїзд на станції, запитай про платформи та час відправлення.",
         "level": "A2",
         "context_prompt": "A traveler buying train tickets at a Polish railway station, asking about schedules and platforms",
         "is_active": true,
@@ -74,8 +74,8 @@
         ]
     },
     {
-        "title": "At the Doctor's Office",
-        "description": "Describe symptoms to a doctor and understand basic medical instructions.",
+        "title": "У Лікаря",
+        "description": "Опиши симптоми лікарю та зрозумій базові медичні інструкції.",
         "level": "B1",
         "context_prompt": "A patient describing health symptoms to a Polish doctor and receiving medical advice",
         "is_active": true,
@@ -89,8 +89,8 @@
         ]
     },
     {
-        "title": "Renting an Apartment",
-        "description": "Discuss apartment details, rent price, and contract terms with a landlord.",
+        "title": "Оренда Квартири",
+        "description": "Обговори деталі квартири, ціну оренди та умови контракту з орендодавцем.",
         "level": "B1",
         "context_prompt": "A potential tenant discussing apartment rental terms, utilities, and contract with a Polish landlord",
         "is_active": true,
