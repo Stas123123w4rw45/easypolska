@@ -44,7 +44,15 @@ async def load_initial_data():
     session_maker = get_session_maker()
     async with session_maker() as session:
         # Delete all existing situations to reload fresh data
-        from sqlalchemy import delete
+        from sqlalchemy import delete, text
+        
+        # Ensure column exists (simple migration)
+        try:
+            await session.execute(text("ALTER TABLE situations ADD COLUMN IF NOT EXISTS vocabulary_focus JSON"))
+            await session.commit()
+        except Exception as e:
+            logger.warning(f"Migration warning: {e}")
+            
         await session.execute(delete(Situation))
         
         # Add all situations from JSON
