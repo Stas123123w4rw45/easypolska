@@ -60,6 +60,8 @@ class AIService:
         """Make API request with retry logic."""
         for attempt in range(max_retries):
             try:
+                print(f"🤖 AI API запит (спроба {attempt + 1}/{max_retries})...")
+                
                 response = await self.client.chat.completions.create(
                     model=self.model,
                     messages=[
@@ -68,17 +70,38 @@ class AIService:
                     ],
                     temperature=self.temperature,
                     max_tokens=self.max_tokens,
-                    response_format={"type": "json_object"}
+                    response_format={"type": "json_object"},
+                    timeout=60.0  # Increased timeout
                 )
                 
                 content = response.choices[0].message.content
+                print(f"✅ AI відповідь отримана (довжина: {len(content)} символів)")
                 return content
             
-            except Exception as e:
-                print(f"⚠️ AI API error (attempt {attempt + 1}/{max_retries}): {e}")
+            except asyncio.TimeoutError as e:
+                print(f"⏱️ Timeout помилка (спроба {attempt + 1}/{max_retries}): {e}")
                 if attempt < max_retries - 1:
-                    await asyncio.sleep(2 ** attempt)  # Exponential backoff
+                    wait_time = 2 ** attempt
+                    print(f"⏳ Очікування {wait_time}с перед повторною спробою...")
+                    await asyncio.sleep(wait_time)
                 else:
+                    print("❌ Всі спроби вичерпано через timeout")
+                    return None
+            
+            except Exception as e:
+                error_msg = str(e)
+                print(f"⚠️ AI API помилка (спроба {attempt + 1}/{max_retries}): {type(e).__name__}")
+                print(f"   Деталі: {error_msg}")
+                
+                # Check if it's a rate limit error
+                if "rate_limit" in error_msg.lower() or "429" in error_msg:
+                    print("🚫 Rate limit досягнуто, очікування довше...")
+                    if attempt < max_retries - 1:
+                        await asyncio.sleep(10)
+                elif attempt < max_retries - 1:
+                    await asyncio.sleep(2 ** attempt)
+                else:
+                    print(f"❌ Всі спроби вичерпано. Остання помилка: {error_msg}")
                     return None
         
         return None
