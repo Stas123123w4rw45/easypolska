@@ -13,6 +13,9 @@ GROQ_MODEL = os.getenv("GROQ_MODEL", "llama-3.1-70b-versatile")  # Updated from 
 GROQ_TEMPERATURE = float(os.getenv("GROQ_TEMPERATURE", "0.7"))
 GROQ_MAX_TOKENS = int(os.getenv("GROQ_MAX_TOKENS", "1024"))
 
+# OpenAI API Configuration (for TTS)
+OPENAI_API_KEY = os.getenv('OPENAI_API_KEY', '')
+
 # Database Configuration
 DATABASE_URL = os.getenv('DATABASE_URL', 'sqlite+aiosqlite:///data/database.db')
 
