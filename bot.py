@@ -43,16 +43,11 @@ async def load_initial_data():
     
     session_maker = get_session_maker()
     async with session_maker() as session:
-        # Check if situations already exist
-        query = select(Situation)
-        result = await session.execute(query)
-        existing = result.scalars().first()
+        # Delete all existing situations to reload fresh data
+        from sqlalchemy import delete
+        await session.execute(delete(Situation))
         
-        if existing:
-            logger.info("Situations already loaded, skipping")
-            return
-        
-        # Add situations
+        # Add all situations from JSON
         for situation_data in situations_data:
             situation = Situation(
                 title=situation_data['title'],
