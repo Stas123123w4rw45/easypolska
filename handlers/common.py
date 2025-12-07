@@ -36,19 +36,19 @@ async def cmd_start(message: Message, state: FSMContext):
             await session.commit()
             
             welcome_text = (
-                "👋 <b>Witaj! Welcome to EasyPolska!</b>\n\n"
-                "I'm your Polish learning companion, designed specifically for Ukrainian and Russian speakers.\n\n"
-                "🎯 <b>Survival Mode</b>: Learn through real-life scenarios\n"
-                "📚 <b>Review Words</b>: Smart spaced repetition system\n"
-                "📊 <b>My Progress</b>: Track your learning journey\n\n"
-                "Let's start your Polish adventure! 🇵🇱"
+                "👋 <b>Вітаю! Ласкаво просимо до EasyPolska!</b>\n\n"
+                "Я твій помічник у вивченні польської мови, спеціально розроблений для українців та росіян.\n\n"
+                "🎯 <b>Режим Виживання</b>: Вчися через реальні життєві ситуації\n"
+                "📚 <b>Повторити Слова</b>: Розумна система інтервального повторення\n"
+                "📊 <b>Мій Прогрес</b>: Відстежуй свій прогрес у навчанні\n\n"
+                "Почнімо твою польську пригоду! 🇵🇱"
             )
         else:
             welcome_text = (
-                f"👋 Welcome back, {message.from_user.first_name}!\n\n"
-                f"Your current level: <b>{user.level}</b>\n"
-                f"Streak: <b>{user.streak_days} days</b> 🔥\n\n"
-                "Ready to continue learning? 🚀"
+                f"👋 З поверненням, {message.from_user.first_name}!\n\n"
+                f"Твій поточний рівень: <b>{user.level}</b>\n"
+                f"Серія: <b>{user.streak_days} днів</b> 🔥\n\n"
+                "Готовий продовжити навчання? 🚀"
             )
     
     await state.set_state(MainMenu.menu)
@@ -63,22 +63,22 @@ async def cmd_start(message: Message, state: FSMContext):
 async def cmd_help(message: Message):
     """Handle /help command."""
     help_text = (
-        "ℹ️ <b>EasyPolska Bot Help</b>\n\n"
-        "<b>Commands:</b>\n"
-        "/start - Start the bot\n"
-        "/help - Show this help message\n"
-        "/stats - View your learning statistics\n"
-        "/menu - Return to main menu\n\n"
-        "<b>How it works:</b>\n\n"
-        "🎯 <b>Survival Mode</b>\n"
-        "Learn Polish through real-life scenarios like shopping, ordering food, or using public transport. "
-        "Each scenario includes audio pronunciation and challenging quizzes designed specifically for Slavic speakers.\n\n"
-        "📚 <b>Review Words</b>\n"
-        "Our smart spaced repetition system ensures you never forget what you've learned. "
-        "Words are reviewed at optimal intervals based on your performance.\n\n"
-        "📊 <b>Progress Tracking</b>\n"
-        "Keep track of your streak, vocabulary size, and mastery level.\n\n"
-        "Need help? Contact @your_support_username"
+        "ℹ️ <b>Допомога EasyPolska Bot</b>\n\n"
+        "<b>Команди:</b>\n"
+        "/start - Запустити бота\n"
+        "/help - Показати цю допомогу\n"
+        "/stats - Переглянути статистику навчання\n"
+        "/menu - Повернутися до головного меню\n\n"
+        "<b>Як це працює:</b>\n\n"
+        "🎯 <b>Режим Виживання</b>\n"
+        "Вчи польську через реальні життєві ситуації: покупки, замовлення їжі, громадський транспорт. "
+        "Кожна ситуація включає аудіо вимову та складні тести, розроблені спеціально для слов'ян.\n\n"
+        "📚 <b>Повторення Слів</b>\n"
+        "Наша розумна система інтервального повторення гарантує, що ти не забудеш вивчене. "
+        "Слова повторюються в оптимальні інтервали на основі твоїх результатів.\n\n"
+        "📊 <b>Відстеження Прогресу</b>\n"
+        "Відстежуй свою серію, розмір словника та рівень володіння.\n\n"
+        "Потрібна допомога? Напиши @your_support_username"
     )
     
     await message.answer(help_text, parse_mode='HTML')
@@ -96,22 +96,22 @@ async def cmd_stats(message: Message):
         user = result.scalar_one_or_none()
         
         if not user:
-            await message.answer("❌ Please use /start first!")
+            await message.answer("❌ Будь ласка, спочатку використай /start!")
             return
         
         stats = await srs_service.get_review_stats(session, user.id)
     
     stats_text = (
-        f"📊 <b>Your Learning Statistics</b>\n\n"
-        f"🎚 Level: <b>{user.level}</b>\n"
-        f"🔥 Streak: <b>{user.streak_days} days</b>\n\n"
-        f"📚 <b>Vocabulary:</b>\n"
-        f"   Total Words: {stats['total_words']}\n"
-        f"   ⏰ Due Now: {stats['due_now']}\n"
-        f"   ✅ Mastered: {stats['mastered']}\n"
-        f"   📖 Learning: {stats['learning']}\n"
-        f"   🆕 New: {stats['new']}\n\n"
-        "Keep up the great work! 💪"
+        f"📊 <b>Твоя Статистика Навчання</b>\n\n"
+        f"🎚 Рівень: <b>{user.level}</b>\n"
+        f"🔥 Серія: <b>{user.streak_days} днів</b>\n\n"
+        f"📚 <b>Словник:</b>\n"
+        f"   Всього Слів: {stats['total_words']}\n"
+        f"   ⏰ До Повторення: {stats['due_now']}\n"
+        f"   ✅ Засвоєно: {stats['mastered']}\n"
+        f"   📖 Вивчається: {stats['learning']}\n"
+        f"   🆕 Нові: {stats['new']}\n\n"
+        "Продовжуй у тому ж дусі! 💪"
     )
     
     await message.answer(stats_text, parse_mode='HTML')
@@ -123,7 +123,7 @@ async def show_main_menu(event: Message | CallbackQuery, state: FSMContext):
     """Show main menu."""
     await state.set_state(MainMenu.menu)
     
-    text = "🏠 <b>Main Menu</b>\n\nWhat would you like to do?"
+    text = "🏠 <b>Головне Меню</b>\n\nЩо ти хочеш зробити?"
     keyboard = get_main_menu_keyboard()
     
     if isinstance(event, Message):

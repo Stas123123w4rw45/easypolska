@@ -36,15 +36,15 @@ async def start_review(callback: CallbackQuery, state: FSMContext):
     
     if due_count == 0:
         text = (
-            "🎉 <b>Great job!</b>\n\n"
-            "No words to review right now. All your vocabulary is up to date!\n\n"
-            "Try learning new words in Survival Mode. 🎯"
+            "🎉 <b>Відмінна робота!</b>\n\n"
+            "Зараз немає слів для повторення. Усі твої слова актуальні!\n\n"
+            "Спробуй вивчити нові слова в Режимі Виживання. 🎯"
         )
     else:
         text = (
-            f"📚 <b>Review Time!</b>\n\n"
-            f"You have <b>{due_count}</b> word(s) due for review.\n\n"
-            "Let's keep your vocabulary fresh! 💪"
+            f"📚 <b>Час Повторення!</b>\n\n"
+            f"У тебе <b>{due_count}</b> слово(ів) для повторення.\n\n"
+            "Тримай свій словник свіжим! 💪"
         )
     
     await state.update_data(user_id=user.id, due_count=due_count, current_index=0)
@@ -81,7 +81,7 @@ async def show_review_question(callback: CallbackQuery, state: FSMContext):
         word = word_result.scalar_one()
     
     await state.set_state(SRSReview.review_active)
-    await callback.message.edit_text("⏳ Generating question...")
+    await callback.message.edit_text("⏳ Генерую питання...")
     await callback.answer()
     
     # Generate fill-in-the-blank question
@@ -94,7 +94,7 @@ async def show_review_question(callback: CallbackQuery, state: FSMContext):
     
     if not question_data:
         await callback.message.answer(
-            "❌ Error generating question. Skipping...",
+            "❌ Помилка генерації питання. Пропускаю...",
         )
         # Skip to next word
         await state.update_data(current_index=current_index + 1)
@@ -122,10 +122,10 @@ async def show_review_question(callback: CallbackQuery, state: FSMContext):
         total_words=len(due_words)
     )
     
-    progress_text = f"Progress: {current_index + 1}/{len(due_words)}"
+    progress_text = f"Прогрес: {current_index + 1}/{len(due_words)}"
     question_text = (
         f"📝 <b>{progress_text}</b>\n\n"
-        f"Fill in the blank:\n\n"
+        f"Заповни пропуск:\n\n"
         f"<i>{question_data.sentence}</i>"
     )
     
@@ -164,14 +164,14 @@ async def answer_review(callback: CallbackQuery, state: FSMContext):
     
     if is_correct:
         feedback = (
-            "✅ <b>Correct!</b> Świetnie!\n\n"
-            f"Word: <b>{data['word_polish']}</b>\n\n"
+            "✅ <b>Правильно!</b> Świetnie!\n\n"
+            f"Слово: <b>{data['word_polish']}</b>\n\n"
             f"<i>{data['review_explanation']}</i>"
         )
     else:
         feedback = (
-            f"❌ <b>Not quite.</b>\n\n"
-            f"Correct answer: <b>{data['review_answers'][data['review_correct_index']]}</b>\n\n"
+            f"❌ <b>Не зовсім.</b>\n\n"
+            f"Правильна відповідь: <b>{data['review_answers'][data['review_correct_index']]}</b>\n\n"
             f"<i>{data['review_explanation']}</i>"
         )
     
@@ -205,9 +205,9 @@ async def complete_review_session(callback: CallbackQuery, state: FSMContext):
     data = await state.get_data()
     
     text = (
-        "🎉 <b>Review Session Complete!</b>\n\n"
-        f"You reviewed <b>{data.get('total_words', 0)}</b> word(s).\n\n"
-        "Great work! Keep your streak going! 🔥"
+        "🎉 <b>Сесія Повторення Завершена!</b>\n\n"
+        f"Ти повторив <b>{data.get('total_words', 0)}</b> слово(ів).\n\n"
+        "Відмінна робота! Тримай свою серію! 🔥"
     )
     
     await state.set_state(MainMenu.menu)

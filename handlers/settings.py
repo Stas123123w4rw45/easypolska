@@ -24,7 +24,7 @@ async def show_settings(callback: CallbackQuery, state: FSMContext):
     
     await state.set_state(Settings.main)
     
-    text = "⚙️ <b>Settings</b>\n\nAdjust your learning preferences:"
+    text = "⚙️ <b>Налаштування</b>\n\nЗміни свої налаштування навчання:"
     
     await callback.message.edit_text(
         text,
@@ -40,11 +40,11 @@ async def change_level_menu(callback: CallbackQuery, state: FSMContext):
     await state.set_state(Settings.change_level)
     
     text = (
-        "📊 <b>Change Your Level</b>\n\n"
-        "Select your Polish proficiency level:\n\n"
-        "🟢 <b>A1</b> - Complete beginner\n"
-        "🟡 <b>A2</b> - Elementary\n"
-        "🟠 <b>B1</b> - Intermediate"
+        "📊 <b>Зміни свій Рівень</b>\n\n"
+        "Обери свій рівень володіння польською:\n\n"
+        "🟢 <b>A1</b> - Повний початківець\n"
+        "🟡 <b>A2</b> - Елементарний\n"
+        "🟠 <b>B1</b> - Середній"
     )
     
     await callback.message.edit_text(
@@ -71,7 +71,7 @@ async def set_level(callback: CallbackQuery, state: FSMContext):
     
     await state.set_state(MainMenu.menu)
     
-    await callback.answer(f"✅ Level changed to {level}", show_alert=True)
+    await callback.answer(f"✅ Рівень змінено на {level}", show_alert=True)
     await show_settings(callback, state)
 
 
@@ -89,16 +89,16 @@ async def show_progress(callback: CallbackQuery, state: FSMContext):
         stats = await srs_service.get_review_stats(session, user.id)
     
     text = (
-        f"📊 <b>Your Progress</b>\n\n"
-        f"🎚 Level: <b>{user.level}</b>\n"
-        f"🔥 Streak: <b>{user.streak_days} days</b>\n\n"
-        f"📚 <b>Vocabulary Statistics:</b>\n"
-        f"   • Total Words: {stats['total_words']}\n"
-        f"   • ⏰ Due Today: {stats['due_now']}\n"
-        f"   • ✅ Mastered: {stats['mastered']}\n"
-        f"   • 📖 Learning: {stats['learning']}\n"
-        f"   • 🆕 New: {stats['new']}\n\n"
-        "Keep up the excellent work! 💪"
+        f"📊 <b>Твій Прогрес</b>\n\n"
+        f"🎚 Рівень: <b>{user.level}</b>\n"
+        f"🔥 Серія: <b>{user.streak_days} днів</b>\n\n"
+        f"📚 <b>Статистика Словника:</b>\n"
+        f"   • Всього Слів: {stats['total_words']}\n"
+        f"   • ⏰ До Повторення: {stats['due_now']}\n"
+        f"   • ✅ Засвоєно: {stats['mastered']}\n"
+        f"   • 📖 Вивчається: {stats['learning']}\n"
+        f"   • 🆕 Нові: {stats['new']}\n\n"
+        "Продовжуй відмінну роботу! 💪"
     )
     
     from utils.keyboards import get_main_menu_keyboard

@@ -7,10 +7,10 @@ from typing import List
 def get_main_menu_keyboard() -> InlineKeyboardMarkup:
     """Get main menu keyboard."""
     keyboard = InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text="🎯 Survival Mode", callback_data="survival_mode")],
-        [InlineKeyboardButton(text="📚 Review Words", callback_data="review_words")],
-        [InlineKeyboardButton(text="📊 My Progress", callback_data="my_progress")],
-        [InlineKeyboardButton(text="⚙️ Settings", callback_data="settings")]
+        [InlineKeyboardButton(text="🎯 Режим Виживання", callback_data="survival_mode")],
+        [InlineKeyboardButton(text="📚 Повторити Слова", callback_data="review_words")],
+        [InlineKeyboardButton(text="📊 Мій Прогрес", callback_data="my_progress")],
+        [InlineKeyboardButton(text="⚙️ Налаштування", callback_data="settings")]
     ])
     return keyboard
 
@@ -26,7 +26,7 @@ def get_scenario_selection_keyboard(scenarios: List[dict]) -> InlineKeyboardMark
                 callback_data=f"scenario_{scenario['id']}"
             )
         ])
-    buttons.append([InlineKeyboardButton(text="🔙 Back to Menu", callback_data="main_menu")])
+    buttons.append([InlineKeyboardButton(text="🔙 Назад до Меню", callback_data="main_menu")])
     
     return InlineKeyboardMarkup(inline_keyboard=buttons)
 
@@ -48,8 +48,8 @@ def get_quiz_keyboard(options: List[str], question_id: str = "quiz") -> InlineKe
 def get_continue_keyboard(next_action: str = "continue") -> InlineKeyboardMarkup:
     """Get continue/next keyboard."""
     keyboard = InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text="➡️ Continue", callback_data=next_action)],
-        [InlineKeyboardButton(text="🔙 Main Menu", callback_data="main_menu")]
+        [InlineKeyboardButton(text="➡️ Продовжити", callback_data=next_action)],
+        [InlineKeyboardButton(text="🔙 Головне Меню", callback_data="main_menu")]
     ])
     return keyboard
 
@@ -58,12 +58,12 @@ def get_review_start_keyboard(due_count: int) -> InlineKeyboardMarkup:
     """Get keyboard to start review session."""
     if due_count == 0:
         keyboard = InlineKeyboardMarkup(inline_keyboard=[
-            [InlineKeyboardButton(text="🔙 Main Menu", callback_data="main_menu")]
+            [InlineKeyboardButton(text="🔙 Головне Меню", callback_data="main_menu")]
         ])
     else:
         keyboard = InlineKeyboardMarkup(inline_keyboard=[
-            [InlineKeyboardButton(text=f"▶️ Start Review ({due_count} words)", callback_data="start_review")],
-            [InlineKeyboardButton(text="🔙 Main Menu", callback_data="main_menu")]
+            [InlineKeyboardButton(text=f"▶️ Почати Повторення ({due_count} слів)", callback_data="start_review")],
+            [InlineKeyboardButton(text="🔙 Головне Меню", callback_data="main_menu")]
         ])
     return keyboard
 
@@ -71,8 +71,8 @@ def get_review_start_keyboard(due_count: int) -> InlineKeyboardMarkup:
 def get_settings_keyboard(current_level: str) -> InlineKeyboardMarkup:
     """Get settings keyboard."""
     keyboard = InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text=f"📊 Current Level: {current_level}", callback_data="change_level")],
-        [InlineKeyboardButton(text="🔙 Main Menu", callback_data="main_menu")]
+        [InlineKeyboardButton(text=f"📊 Поточний Рівень: {current_level}", callback_data="change_level")],
+        [InlineKeyboardButton(text="🔙 Головне Меню", callback_data="main_menu")]
     ])
     return keyboard
 
@@ -80,9 +80,9 @@ def get_settings_keyboard(current_level: str) -> InlineKeyboardMarkup:
 def get_level_selection_keyboard() -> InlineKeyboardMarkup:
     """Get level selection keyboard."""
     keyboard = InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text="🟢 A1 (Beginner)", callback_data="level_A1")],
-        [InlineKeyboardButton(text="🟡 A2 (Elementary)", callback_data="level_A2")],
-        [InlineKeyboardButton(text="🟠 B1 (Intermediate)", callback_data="level_B1")],
-        [InlineKeyboardButton(text="🔙 Back", callback_data="settings")]
+        [InlineKeyboardButton(text="🟢 A1 (Початковий)", callback_data="level_A1")],
+        [InlineKeyboardButton(text="🟡 A2 (Елементарний)", callback_data="level_A2")],
+        [InlineKeyboardButton(text="🟠 B1 (Середній)", callback_data="level_B1")],
+        [InlineKeyboardButton(text="🔙 Назад", callback_data="settings")]
     ])
     return keyboard

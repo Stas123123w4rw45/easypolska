@@ -41,7 +41,7 @@ async def start_survival_mode(callback: CallbackQuery, state: FSMContext):
         scenarios = scenarios_result.scalars().all()
         
         if not scenarios:
-            await callback.answer("No scenarios available yet!", show_alert=True)
+            await callback.answer("Сценаріїв поки немає!", show_alert=True)
             return
         
         scenarios_data = [
@@ -52,9 +52,9 @@ async def start_survival_mode(callback: CallbackQuery, state: FSMContext):
     await state.set_state(SurvivalMode.select_scenario)
     
     text = (
-        "🎯 <b>Survival Mode</b>\n\n"
-        f"Choose a scenario to practice. These are real-life situations you'll encounter in Poland!\n\n"
-        f"Your level: <b>{user.level}</b>"
+        "🎯 <b>Режим Виживання</b>\n\n"
+        f"Обери сценарій для практики. Це реальні життєві ситуації, з якими ти зіткнешся в Польщі!\n\n"
+        f"Твій рівень: <b>{user.level}</b>"
     )
     
     await callback.message.edit_text(
@@ -78,7 +78,7 @@ async def select_scenario(callback: CallbackQuery, state: FSMContext):
         scenario = result.scalar_one_or_none()
         
         if not scenario:
-            await callback.answer("Scenario not found!", show_alert=True)
+            await callback.answer("Сценарій не знайдено!", show_alert=True)
             return
         
         # Save scenario to state
@@ -93,15 +93,15 @@ async def select_scenario(callback: CallbackQuery, state: FSMContext):
     await state.set_state(SurvivalMode.scenario_intro)
     
     # Show loading message
-    await callback.message.edit_text("⏳ Preparing your scenario...")
+    await callback.message.edit_text("⏳ Готую твій сценарій...")
     await callback.answer()
     
     # Generate intro (optional - can skip if TTS is not available)
     intro_text = (
         f"📍 <b>{scenario.title}</b>\n\n"
         f"{scenario.description}\n\n"
-        f"Level: {scenario.level}\n\n"
-        "Get ready for your quiz! 🎯"
+        f"Рівень: {scenario.level}\n\n"
+        "Готуйся до тесту! 🎯"
     )
     
     # Try to generate audio
@@ -120,7 +120,7 @@ async def select_scenario(callback: CallbackQuery, state: FSMContext):
         await callback.message.answer(intro_text, parse_mode='HTML')
     
     await callback.message.answer(
-        "Ready to start?",
+        "Готовий почати?",
         reply_markup=get_continue_keyboard("start_quiz")
     )
 
@@ -141,7 +141,7 @@ async def start_quiz(callback: CallbackQuery, state: FSMContext):
         difficulty = "normal"
         # Could add logic here to check user's performance and adjust difficulty
     
-    await callback.message.edit_text("🤔 Generating your quiz question...")
+    await callback.message.edit_text("🤔 Генерую питання для тебе...")
     await callback.answer()
     
     # Generate quiz
@@ -154,7 +154,7 @@ async def start_quiz(callback: CallbackQuery, state: FSMContext):
     
     if not quiz:
         await callback.message.answer(
-            "❌ Sorry, couldn't generate a question. Please try again.",
+            "❌ Вибач, не вдалося згенерувати питання. Спробуй ще раз.",
             reply_markup=get_main_menu_keyboard()
         )
         await state.set_state(MainMenu.menu)
@@ -181,7 +181,7 @@ async def start_quiz(callback: CallbackQuery, state: FSMContext):
     
     await state.set_state(SurvivalMode.quiz_active)
     
-    question_text = f"❓ <b>Question:</b>\n\n{quiz.question}"
+    question_text = f"❓ <b>Питання:</b>\n\n{quiz.question}"
     
     await callback.message.answer(
         question_text,
@@ -216,15 +216,15 @@ async def answer_quiz(callback: CallbackQuery, state: FSMContext):
     
     if is_correct:
         feedback = (
-            "✅ <b>Correct!</b> Świetnie! 🎉\n\n"
-            f"<b>Explanation:</b>\n{data['quiz_explanation']}"
+            "✅ <b>Правильно!</b> Świetnie! 🎉\n\n"
+            f"<b>Пояснення:</b>\n{data['quiz_explanation']}"
         )
     else:
         feedback = (
-            f"❌ <b>Not quite right.</b>\n\n"
-            f"Your answer: {data['quiz_answers'][answer_index]}\n"
-            f"Correct answer: <b>{data['quiz_answers'][data['quiz_correct_index']]}</b>\n\n"
-            f"<b>Explanation:</b>\n{data['quiz_explanation']}"
+            f"❌ <b>Не зовсім правильно.</b>\n\n"
+            f"Твоя відповідь: {data['quiz_answers'][answer_index]}\n"
+            f"Правильна відповідь: <b>{data['quiz_answers'][data['quiz_correct_index']]}</b>\n\n"
+            f"<b>Пояснення:</b>\n{data['quiz_explanation']}"
         )
     
     await callback.message.edit_text(
