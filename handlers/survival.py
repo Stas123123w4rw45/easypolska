@@ -183,7 +183,7 @@ async def start_quiz(callback: CallbackQuery, state: FSMContext):
                 polish_word = item.split("(")[0].strip() if "(" in item else item.strip()
                 
                 # Check if word exists in DB
-                v_query = select(Vocabulary).where(Vocabulary.polish_word == polish_word)
+                v_query = select(Vocabulary).where(Vocabulary.word_polish == polish_word)
                 v_result = await session.execute(v_query)
                 vocab_item = v_result.scalar_one_or_none()
                 
@@ -195,9 +195,10 @@ async def start_quiz(callback: CallbackQuery, state: FSMContext):
                         translation = item.split("(")[1].replace(")", "").strip()
                     
                     vocab_item = Vocabulary(
-                        polish_word=polish_word,
-                        ukrainian_translation=translation,
-                        level=data['scenario_level'],
+                        word_polish=polish_word,
+                        translation_ua=translation,
+                        translation_ru=translation,  # Fill required field
+                        difficulty_level=data['scenario_level'],
                         category='scenario'
                     )
                     session.add(vocab_item)
