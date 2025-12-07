@@ -1,0 +1,119 @@
+"""Main bot entry point."""
+
+import asyncio
+import logging
+import sys
+import json
+from pathlib import Path
+
+from aiogram import Bot, Dispatcher
+from aiogram.enums import ParseMode
+from aiogram.fsm.storage.memory import MemoryStorage
+from aiogram.client.default import DefaultBotProperties
+from sqlalchemy import select
+
+import config
+from models.models import init_db, close_db, async_session_maker, Situation
+from handlers import common, survival, review, settings
+
+# Configure logging
+logging.basicConfig(
+    level=getattr(logging, config.LOG_LEVEL),
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.StreamHandler(sys.stdout)
+    ]
+)
+logger = logging.getLogger(__name__)
+
+
+async def load_initial_data():
+    """Load initial situations data into database."""
+    logger.info("Loading initial situation data...")
+    
+    # Load situations from JSON file
+    situations_file = Path(__file__).parent / "data" / "situations.json"
+    
+    if not situations_file.exists():
+        logger.warning("situations.json not found, skipping initial data load")
+        return
+    
+    with open(situations_file, 'r', encoding='utf-8') as f:
+        situations_data = json.load(f)
+    
+    async with async_session_maker() as session:
+        # Check if situations already exist
+        query = select(Situation)
+        result = await session.execute(query)
+        existing = result.scalars().first()
+        
+        if existing:
+            logger.info("Situations already loaded, skipping")
+            return
+        
+        # Add situations
+        for situation_data in situations_data:
+            situation = Situation(
+                title=situation_data['title'],
+                description=situation_data['description'],
+                level=situation_data['level'],
+                context_prompt=situation_data['context_prompt'],
+                is_active=situation_data.get('is_active', True)
+            )
+            session.add(situation)
+        
+        await session.commit()
+        logger.info(f"✅ Loaded {len(situations_data)} situations")
+
+
+async def main():
+    """Main bot function."""
+    # Validate configuration
+    try:
+        config.validate_config()
+    except ValueError as e:
+        logger.error(f"Configuration error: {e}")
+        sys.exit(1)
+    
+    # Initialize database
+    await init_db()
+    
+    # Load initial data
+    await load_initial_data()
+    
+    # Initialize bot and dispatcher
+    bot = Bot(
+        token=config.BOT_TOKEN,
+        default=DefaultBotProperties(parse_mode=ParseMode.HTML)
+    )
+    
+    dp = Dispatcher(storage=MemoryStorage())
+    
+    # Register routers
+    dp.include_router(common.router)
+    dp.include_router(survival.router)
+    dp.include_router(review.router)
+    dp.include_router(settings.router)
+    
+    logger.info("🤖 Bot started successfully!")
+    logger.info(f"📊 Level: {config.LOG_LEVEL}")
+    logger.info(f"🗄️ Database: {config.DATABASE_URL}")
+    
+    try:
+        # Start polling
+        await dp.start_polling(bot, allowed_updates=dp.resolve_used_update_types())
+    finally:
+        # Cleanup
+        await bot.session.close()
+        await close_db()
+        logger.info("👋 Bot stopped")
+
+
+if __name__ == "__main__":
+    try:
+        asyncio.run(main())
+    except KeyboardInterrupt:
+        logger.info("Bot stopped by user")
+    except Exception as e:
+        logger.error(f"Fatal error: {e}", exc_info=True)
+        sys.exit(1)

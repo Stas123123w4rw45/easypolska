@@ -1,0 +1,106 @@
+[
+    {
+        "title": "At Żabka (Convenience Store)",
+        "description": "You need to buy water, ask for the price, and request a receipt. Learn essential shopping vocabulary.",
+        "level": "A1",
+        "context_prompt": "A customer shopping at a Żabka convenience store in Poland, buying basic items and asking for receipt",
+        "is_active": true,
+        "vocabulary_focus": [
+            "proszę",
+            "rachunek",
+            "woda",
+            "ile kosztuje",
+            "dziękuję"
+        ]
+    },
+    {
+        "title": "Ordering Uber",
+        "description": "Confirm your pickup location and destination with the driver. Practice giving addresses and directions.",
+        "level": "A1",
+        "context_prompt": "A passenger confirming pickup location and destination address with an Uber driver in Polish",
+        "is_active": true,
+        "vocabulary_focus": [
+            "dokąd",
+            "skąd",
+            "adres",
+            "ulica",
+            "tutaj",
+            "tam"
+        ]
+    },
+    {
+        "title": "At the Restaurant",
+        "description": "Order food and drinks, ask for recommendations, and request the bill.",
+        "level": "A2",
+        "context_prompt": "A customer at a Polish restaurant ordering food, asking for recommendations, and requesting the bill",
+        "is_active": true,
+        "vocabulary_focus": [
+            "menu",
+            "polecać",
+            "zamówienie",
+            "deser",
+            "danie główne",
+            "kelner"
+        ]
+    },
+    {
+        "title": "At the Post Office (Poczta)",
+        "description": "Send a package or letter, buy stamps, and ask about delivery times.",
+        "level": "A2",
+        "context_prompt": "A customer at a Polish post office sending a package internationally and asking about delivery",
+        "is_active": true,
+        "vocabulary_focus": [
+            "paczka",
+            "znaczek",
+            "wysłać",
+            "adresat",
+            "nadawca",
+            "jak długo"
+        ]
+    },
+    {
+        "title": "Buying Train Tickets",
+        "description": "Purchase train tickets at a station, ask about platforms and departure times.",
+        "level": "A2",
+        "context_prompt": "A traveler buying train tickets at a Polish railway station, asking about schedules and platforms",
+        "is_active": true,
+        "vocabulary_focus": [
+            "bilet",
+            "peron",
+            "odjazd",
+            "przyjazd",
+            "rozkład jazdy",
+            "miejscówka"
+        ]
+    },
+    {
+        "title": "At the Doctor's Office",
+        "description": "Describe symptoms to a doctor and understand basic medical instructions.",
+        "level": "B1",
+        "context_prompt": "A patient describing health symptoms to a Polish doctor and receiving medical advice",
+        "is_active": true,
+        "vocabulary_focus": [
+            "ból",
+            "objawy",
+            "recepta",
+            "badanie",
+            "wizyta",
+            "ciśnienie"
+        ]
+    },
+    {
+        "title": "Renting an Apartment",
+        "description": "Discuss apartment details, rent price, and contract terms with a landlord.",
+        "level": "B1",
+        "context_prompt": "A potential tenant discussing apartment rental terms, utilities, and contract with a Polish landlord",
+        "is_active": true,
+        "vocabulary_focus": [
+            "wynajem",
+            "kaucja",
+            "umowa",
+            "media",
+            "czynsz",
+            "właściciel"
+        ]
+    }
+]
