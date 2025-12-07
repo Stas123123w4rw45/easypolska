@@ -54,7 +54,8 @@ async def load_initial_data():
                 description=situation_data['description'],
                 level=situation_data['level'],
                 context_prompt=situation_data['context_prompt'],
-                is_active=situation_data.get('is_active', True)
+                is_active=situation_data.get('is_active', True),
+                vocabulary_focus=situation_data.get('vocabulary_focus', [])
             )
             session.add(situation)
         

@@ -6,11 +6,11 @@
         "context_prompt": "A customer shopping at a Żabka convenience store in Poland, buying basic items and asking for receipt",
         "is_active": true,
         "vocabulary_focus": [
-            "proszę",
-            "rachunek",
-            "woda",
-            "ile kosztuje",
-            "dziękuję"
+            "proszę (будь ласка/прошу)",
+            "rachunek (чек/рахунок)",
+            "woda (вода)",
+            "ile kosztuje (скільки коштує)",
+            "dziękuję (дякую)"
         ]
     },
     {
@@ -20,12 +20,12 @@
         "context_prompt": "A passenger confirming pickup location and destination address with an Uber driver in Polish",
         "is_active": true,
         "vocabulary_focus": [
-            "dokąd",
-            "skąd",
-            "adres",
-            "ulica",
-            "tutaj",
-            "tam"
+            "dokąd (куди)",
+            "skąd (звідки)",
+            "adres (адреса)",
+            "ulica (вулиця)",
+            "tutaj (тут)",
+            "tam (там)"
         ]
     },
     {
@@ -35,12 +35,12 @@
         "context_prompt": "A customer at a Polish restaurant ordering food, asking for recommendations, and requesting the bill",
         "is_active": true,
         "vocabulary_focus": [
-            "menu",
-            "polecać",
-            "zamówienie",
-            "deser",
-            "danie główne",
-            "kelner"
+            "menu (меню)",
+            "polecać (рекомендувати)",
+            "zamówienie (замовлення)",
+            "deser (десерт)",
+            "danie główne (головна страва)",
+            "kelner (офіціант)"
         ]
     },
     {
@@ -50,12 +50,12 @@
         "context_prompt": "A customer at a Polish post office sending a package internationally and asking about delivery",
         "is_active": true,
         "vocabulary_focus": [
-            "paczka",
-            "znaczek",
-            "wysłać",
-            "adresat",
-            "nadawca",
-            "jak długo"
+            "paczka (посилка)",
+            "znaczek (марка)",
+            "wysłać (відправити)",
+            "adresat (адресат)",
+            "nadawca (відправник)",
+            "jak długo (як довго)"
         ]
     },
     {
@@ -65,12 +65,12 @@
         "context_prompt": "A traveler buying train tickets at a Polish railway station, asking about schedules and platforms",
         "is_active": true,
         "vocabulary_focus": [
-            "bilet",
-            "peron",
-            "odjazd",
-            "przyjazd",
-            "rozkład jazdy",
-            "miejscówka"
+            "bilet (квиток)",
+            "peron (платформа)",
+            "odjazd (відправлення)",
+            "przyjazd (прибуття)",
+            "rozkład jazdy (розклад руху)",
+            "miejscówka (місце в плацкарті/поїзді)"
         ]
     },
     {
@@ -80,12 +80,12 @@
         "context_prompt": "A patient describing health symptoms to a Polish doctor and receiving medical advice",
         "is_active": true,
         "vocabulary_focus": [
-            "ból",
-            "objawy",
-            "recepta",
-            "badanie",
-            "wizyta",
-            "ciśnienie"
+            "ból (біль)",
+            "objawy (симптоми)",
+            "recepta (рецепт)",
+            "badanie (обстеження)",
+            "wizyta (візит)",
+            "ciśnienie (тиск)"
         ]
     },
     {
@@ -95,12 +95,12 @@
         "context_prompt": "A potential tenant discussing apartment rental terms, utilities, and contract with a Polish landlord",
         "is_active": true,
         "vocabulary_focus": [
-            "wynajem",
-            "kaucja",
-            "umowa",
-            "media",
-            "czynsz",
-            "właściciel"
+            "wynajem (оренда)",
+            "kaucja (застава)",
+            "umowa (договір)",
+            "media (komunalne services)",
+            "czynsz (квартплата)",
+            "właściciel (власник)"
         ]
     }
 ]

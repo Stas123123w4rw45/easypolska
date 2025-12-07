@@ -111,7 +111,8 @@ class AIService:
         situation: str,
         situation_description: str,
         user_level: str = "A1",
-        difficulty: str = "normal"
+        difficulty: str = "normal",
+        target_vocabulary: list[str] = None
     ) -> Optional[QuizData]:
         """
         Generate a quiz question for a given situation.
@@ -121,6 +122,7 @@ class AIService:
             situation_description: Detailed context for the scenario
             user_level: A1, A2, or B1
             difficulty: "normal" or "hard"
+            target_vocabulary: List of words to focus on
         
         Returns:
             QuizData object or None if generation failed
@@ -130,11 +132,14 @@ class AIService:
             else QUIZ_DIFFICULTY_NORMAL
         )
         
+        vocab_str = ", ".join(target_vocabulary) if target_vocabulary else "Any relevant vocabulary"
+        
         system_prompt = QUIZ_SYSTEM_PROMPT.format(
             situation=situation,
             level=user_level,
             difficulty=difficulty,
-            difficulty_instruction=difficulty_instruction
+            difficulty_instruction=difficulty_instruction,
+            vocabulary=vocab_str
         )
         
         user_prompt = f"Generate a quiz question for: {situation_description}"

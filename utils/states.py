@@ -12,6 +12,7 @@ class SurvivalMode(StatesGroup):
     """Survival mode (scenario-based learning) states."""
     select_scenario = State()
     scenario_intro = State()
+    preview_vocabulary = State()
     quiz_active = State()
     show_feedback = State()
 

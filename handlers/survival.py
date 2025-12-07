@@ -87,7 +87,8 @@ async def select_scenario(callback: CallbackQuery, state: FSMContext):
             scenario_title=scenario.title,
             scenario_description=scenario.description,
             scenario_level=scenario.level,
-            scenario_context=scenario.context_prompt
+            scenario_context=scenario.context_prompt,
+            scenario_vocabulary=scenario.vocabulary_focus or []
         )
     
     await state.set_state(SurvivalMode.scenario_intro)
@@ -121,14 +122,48 @@ async def select_scenario(callback: CallbackQuery, state: FSMContext):
     
     await callback.message.answer(
         "Готовий почати?",
-        reply_markup=get_continue_keyboard("start_quiz")
+        reply_markup=get_continue_keyboard("preview_vocabulary")
     )
 
 
-@router.callback_query(F.data == "start_quiz", SurvivalMode.scenario_intro)
+@router.callback_query(F.data == "preview_vocabulary", SurvivalMode.scenario_intro)
+async def preview_vocabulary(callback: CallbackQuery, state: FSMContext):
+    """Show vocabulary preview before quiz."""
+    data = await state.get_data()
+    vocab_list = data.get('scenario_vocabulary', [])
+    
+    if not vocab_list:
+        # If no vocabulary, skip to quiz
+        await start_quiz(callback, state)
+        return
+    
+    await state.set_state(SurvivalMode.preview_vocabulary)
+    
+    # Format vocabulary list
+    vocab_text = "📚 <b>Словник для цього сценарію:</b>\n\n"
+    for word in vocab_list:
+        # Check if word has translation format "Word (Translation)" or just "Word"
+        if "(" in word and ")" in word:
+            vocab_text += f"🔹 {word}\n"
+        else:
+            vocab_text += f"🔹 {word}\n"
+            
+    vocab_text += "\nЗапам'ятай ці слова, вони зараз знадобляться!"
+    
+    await callback.message.edit_text(
+        vocab_text,
+        reply_markup=get_continue_keyboard("start_quiz"),
+        parse_mode='HTML'
+    )
+    await callback.answer()
+
+
+@router.callback_query(F.data == "start_quiz", SurvivalMode.preview_vocabulary)
+@router.callback_query(F.data == "start_quiz", SurvivalMode.scenario_intro)  # Fallback
 async def start_quiz(callback: CallbackQuery, state: FSMContext):
     """Generate and show quiz question."""
     data = await state.get_data()
+    vocab_list = data.get('scenario_vocabulary', [])
     
     session_maker = models.get_session_maker()
     async with session_maker() as session:
@@ -136,6 +171,42 @@ async def start_quiz(callback: CallbackQuery, state: FSMContext):
         query = select(User).where(User.telegram_id == callback.from_user.id)
         result = await session.execute(query)
         user = result.scalar_one_or_none()
+        
+        # Add vocabulary to SRS if it exists
+        # We need to find or create these words in Vocabulary table first
+        from models.models import Vocabulary
+        from services.srs_service import srs_service
+        
+        if vocab_list:
+            for item in vocab_list:
+                # Extract Polish word if format is "Polish (Ukrainian)"
+                polish_word = item.split("(")[0].strip() if "(" in item else item.strip()
+                
+                # Check if word exists in DB
+                v_query = select(Vocabulary).where(Vocabulary.polish_word == polish_word)
+                v_result = await session.execute(v_query)
+                vocab_item = v_result.scalar_one_or_none()
+                
+                if not vocab_item:
+                    # Create new vocabulary item
+                    # Try to extract translation if present
+                    translation = ""
+                    if "(" in item and ")" in item:
+                        translation = item.split("(")[1].replace(")", "").strip()
+                    
+                    vocab_item = Vocabulary(
+                        polish_word=polish_word,
+                        ukrainian_translation=translation,
+                        level=data['scenario_level'],
+                        category='scenario'
+                    )
+                    session.add(vocab_item)
+                    await session.flush()  # Get ID
+                
+                # Add to SRS service for user
+                await srs_service.add_word_to_user(session, user.id, vocab_item.id)
+            
+            await session.commit()
         
         # Determine difficulty
         difficulty = "normal"
@@ -149,7 +220,8 @@ async def start_quiz(callback: CallbackQuery, state: FSMContext):
         situation=data['scenario_title'],
         situation_description=data['scenario_context'],
         user_level=data['scenario_level'],
-        difficulty=difficulty
+        difficulty=difficulty,
+        target_vocabulary=vocab_list
     )
     
     if not quiz:
