@@ -13,7 +13,7 @@ from aiogram.client.default import DefaultBotProperties
 from sqlalchemy import select
 
 import config
-from models.models import init_db, close_db, async_session_maker, Situation
+from models.models import init_db, close_db, get_session_maker, Situation
 from handlers import common, survival, review, settings
 
 # Configure logging
@@ -41,7 +41,8 @@ async def load_initial_data():
     with open(situations_file, 'r', encoding='utf-8') as f:
         situations_data = json.load(f)
     
-    async with async_session_maker() as session:
+    session_maker = get_session_maker()
+    async with session_maker() as session:
         # Check if situations already exist
         query = select(Situation)
         result = await session.execute(query)

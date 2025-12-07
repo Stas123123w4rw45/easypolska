@@ -7,7 +7,8 @@ from aiogram.fsm.context import FSMContext
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from models.models import User, async_session_maker
+from models import models
+from models.models import User
 from utils.states import MainMenu
 from utils.keyboards import get_main_menu_keyboard
 
@@ -17,7 +18,8 @@ router = Router()
 @router.message(CommandStart())
 async def cmd_start(message: Message, state: FSMContext):
     """Handle /start command."""
-    async with async_session_maker() as session:
+    session_maker = models.get_session_maker()
+    async with session_maker() as session:
         # Check if user exists
         query = select(User).where(User.telegram_id == message.from_user.id)
         result = await session.execute(query)
@@ -87,7 +89,8 @@ async def cmd_stats(message: Message):
     """Handle /stats command."""
     from services.srs_service import srs_service
     
-    async with async_session_maker() as session:
+    session_maker = models.get_session_maker()
+    async with session_maker() as session:
         query = select(User).where(User.telegram_id == message.from_user.id)
         result = await session.execute(query)
         user = result.scalar_one_or_none()

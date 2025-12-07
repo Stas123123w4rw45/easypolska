@@ -146,8 +146,17 @@ async def init_db():
     print("✅ Database initialized successfully")
 
 
+def get_session_maker():
+    """Get the session maker (must be called after init_db)."""
+    if async_session_maker is None:
+        raise RuntimeError("Database not initialized. Call init_db() first.")
+    return async_session_maker
+
+
 async def get_session() -> AsyncSession:
     """Get database session."""
+    if async_session_maker is None:
+        raise RuntimeError("Database not initialized. Call init_db() first.")
     async with async_session_maker() as session:
         yield session
 

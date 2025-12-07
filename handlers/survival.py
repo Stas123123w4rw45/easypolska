@@ -7,7 +7,8 @@ from aiogram.types import CallbackQuery, FSInputFile
 from aiogram.fsm.context import FSMContext
 from sqlalchemy import select
 
-from models.models import User, Situation, UserQuizHistory, async_session_maker
+from models import models
+from models.models import User, Situation, UserQuizHistory
 from utils.states import SurvivalMode, MainMenu
 from utils.keyboards import (
     get_scenario_selection_keyboard,
@@ -24,7 +25,8 @@ router = Router()
 @router.callback_query(F.data == "survival_mode")
 async def start_survival_mode(callback: CallbackQuery, state: FSMContext):
     """Start survival mode - show scenario selection."""
-    async with async_session_maker() as session:
+    session_maker = models.get_session_maker()
+    async with session_maker() as session:
         # Get user
         query = select(User).where(User.telegram_id == callback.from_user.id)
         result = await session.execute(query)
@@ -68,7 +70,8 @@ async def select_scenario(callback: CallbackQuery, state: FSMContext):
     """Handle scenario selection."""
     scenario_id = int(callback.data.split("_")[1])
     
-    async with async_session_maker() as session:
+    session_maker = models.get_session_maker()
+    async with session_maker() as session:
         # Get scenario
         query = select(Situation).where(Situation.id == scenario_id)
         result = await session.execute(query)
@@ -127,7 +130,8 @@ async def start_quiz(callback: CallbackQuery, state: FSMContext):
     """Generate and show quiz question."""
     data = await state.get_data()
     
-    async with async_session_maker() as session:
+    session_maker = models.get_session_maker()
+    async with session_maker() as session:
         # Get user
         query = select(User).where(User.telegram_id == callback.from_user.id)
         result = await session.execute(query)
@@ -195,7 +199,8 @@ async def answer_quiz(callback: CallbackQuery, state: FSMContext):
     is_correct = (answer_index == data['quiz_correct_index'])
     
     # Save to history
-    async with async_session_maker() as session:
+    session_maker = models.get_session_maker()
+    async with session_maker() as session:
         history = UserQuizHistory(
             user_id=data['user_id'],
             situation_id=data['scenario_id'],

@@ -6,7 +6,8 @@ from aiogram.types import CallbackQuery
 from aiogram.fsm.context import FSMContext
 from sqlalchemy import select
 
-from models.models import User, UserProgress, Vocabulary, async_session_maker
+from models import models
+from models.models import User, UserProgress, Vocabulary
 from utils.states import SRSReview, MainMenu
 from utils.keyboards import (
     get_review_start_keyboard,
@@ -22,7 +23,8 @@ router = Router()
 @router.callback_query(F.data == "review_words")
 async def start_review(callback: CallbackQuery, state: FSMContext):
     """Start SRS review session."""
-    async with async_session_maker() as session:
+    session_maker = models.get_session_maker()
+    async with session_maker() as session:
         # Get user
         query = select(User).where(User.telegram_id == callback.from_user.id)
         result = await session.execute(query)
@@ -61,7 +63,8 @@ async def show_review_question(callback: CallbackQuery, state: FSMContext):
     data = await state.get_data()
     current_index = data.get('current_index', 0)
     
-    async with async_session_maker() as session:
+    session_maker = models.get_session_maker()
+    async with session_maker() as session:
         # Get due words
         due_words = await srs_service.get_due_words(session, data['user_id'])
         
@@ -148,7 +151,8 @@ async def answer_review(callback: CallbackQuery, state: FSMContext):
         quality = 1  # Incorrect but familiar
     
     # Update SRS progress
-    async with async_session_maker() as session:
+    session_maker = models.get_session_maker()
+    async with session_maker() as session:
         await srs_service.update_progress(
             session=session,
             progress_id=data['progress_id'],

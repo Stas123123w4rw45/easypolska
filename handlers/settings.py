@@ -5,7 +5,8 @@ from aiogram.types import CallbackQuery
 from aiogram.fsm.context import FSMContext
 from sqlalchemy import select
 
-from models.models import User, async_session_maker
+from models import models
+from models.models import User
 from utils.states import Settings, MainMenu
 from utils.keyboards import get_settings_keyboard, get_level_selection_keyboard
 
@@ -15,7 +16,8 @@ router = Router()
 @router.callback_query(F.data == "settings")
 async def show_settings(callback: CallbackQuery, state: FSMContext):
     """Show settings menu."""
-    async with async_session_maker() as session:
+    session_maker = models.get_session_maker()
+    async with session_maker() as session:
         query = select(User).where(User.telegram_id == callback.from_user.id)
         result = await session.execute(query)
         user = result.scalar_one_or_none()
@@ -58,7 +60,8 @@ async def set_level(callback: CallbackQuery, state: FSMContext):
     """Set user level."""
     level = callback.data.split("_")[1]  # A1, A2, or B1
     
-    async with async_session_maker() as session:
+    session_maker = models.get_session_maker()
+    async with session_maker() as session:
         query = select(User).where(User.telegram_id == callback.from_user.id)
         result = await session.execute(query)
         user = result.scalar_one_or_none()
@@ -77,7 +80,8 @@ async def show_progress(callback: CallbackQuery, state: FSMContext):
     """Show user progress and statistics."""
     from services.srs_service import srs_service
     
-    async with async_session_maker() as session:
+    session_maker = models.get_session_maker()
+    async with session_maker() as session:
         query = select(User).where(User.telegram_id == callback.from_user.id)
         result = await session.execute(query)
         user = result.scalar_one_or_none()
