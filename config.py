@@ -39,11 +39,6 @@ TTS_MODEL = "tts-1"
 TTS_VOICE = "alloy"
 TTS_AUDIO_DIR = "audio"
 
-# AI Model Configuration
-GROQ_MODEL = "mixtral-8x7b-32768"  # Good for structured output
-GROQ_TEMPERATURE = 0.7
-GROQ_MAX_TOKENS = 1000
-
 # Validate required environment variables
 def validate_config():
     """Validate that all required environment variables are set."""
