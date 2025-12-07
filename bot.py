@@ -75,6 +75,11 @@ async def main():
         logger.error(f"Configuration error: {e}")
         sys.exit(1)
     
+    # Create data directory for SQLite database
+    data_dir = Path(__file__).parent / "data"
+    data_dir.mkdir(exist_ok=True)
+    logger.info(f"✅ Data directory ready: {data_dir}")
+    
     # Initialize database
     await init_db()
     
