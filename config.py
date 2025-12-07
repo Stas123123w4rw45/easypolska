@@ -6,8 +6,12 @@ load_dotenv()
 
 # Bot Configuration
 BOT_TOKEN = os.getenv('BOT_TOKEN', '')
-GROQ_API_KEY = os.getenv('GROQ_API_KEY', '')
-OPENAI_API_KEY = os.getenv('OPENAI_API_KEY', '')
+
+# Groq API Configuration
+GROQ_API_KEY = os.getenv("GROQ_API_KEY", "")
+GROQ_MODEL = os.getenv("GROQ_MODEL", "llama-3.1-70b-versatile")  # Updated from deprecated mixtral
+GROQ_TEMPERATURE = float(os.getenv("GROQ_TEMPERATURE", "0.7"))
+GROQ_MAX_TOKENS = int(os.getenv("GROQ_MAX_TOKENS", "1024"))
 
 # Database Configuration
 DATABASE_URL = os.getenv('DATABASE_URL', 'sqlite+aiosqlite:///data/database.db')
