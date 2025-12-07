@@ -87,6 +87,7 @@ class Situation(Base):
     level = Column(String(10), default='A1')
     context_prompt = Column(Text, nullable=False)  # Prompt sent to AI
     is_active = Column(Boolean, default=True)
+    vocabulary_focus = Column(JSON, nullable=True)  # List of target words
     
     # Relationships
     quiz_history = relationship('UserQuizHistory', back_populates='situation')
