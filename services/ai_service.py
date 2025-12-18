@@ -11,6 +11,7 @@ from utils.prompts import (
     QUIZ_DIFFICULTY_HARD,
     QUIZ_DIFFICULTY_NORMAL,
     FILL_IN_BLANK_PROMPT,
+    FILL_IN_BLANK_WITH_EXPLANATION_PROMPT,
     SCENARIO_INTRO_PROMPT
 )
 
@@ -178,7 +179,7 @@ class AIService:
         Returns:
             FillInBlankData object or None if generation failed
         """
-        system_prompt = FILL_IN_BLANK_PROMPT.format(
+        system_prompt = FILL_IN_BLANK_WITH_EXPLANATION_PROMPT.format(
             word=word,
             translation_ua=translation_ua,
             translation_ru=translation_ru,

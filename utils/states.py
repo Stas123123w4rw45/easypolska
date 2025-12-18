@@ -28,3 +28,17 @@ class Settings(StatesGroup):
     """Settings menu states."""
     main = State()
     change_level = State()
+
+
+class FlashcardLearning(StatesGroup):
+    """Flashcard-based word learning states."""
+    show_word = State()
+    show_translation = State()
+    waiting_feedback = State()
+
+
+class FillBlankTraining(StatesGroup):
+    """Fill-in-the-blank training states."""
+    show_question = State()
+    show_result = State()
+

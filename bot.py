@@ -14,7 +14,7 @@ from sqlalchemy import select
 
 import config
 from models.models import init_db, close_db, get_session_maker, Situation
-from handlers import common, survival, review, settings
+from handlers import common, survival, review, settings, flashcard_learning, fill_blank_training
 
 # Configure logging
 logging.basicConfig(
@@ -71,6 +71,58 @@ async def load_initial_data():
         logger.info(f"✅ Loaded {len(situations_data)} situations")
 
 
+async def load_initial_words():
+    """Load initial vocabulary words into database."""
+    logger.info("Loading initial vocabulary words...")
+    
+    # Load words from JSON file
+    words_file = Path(__file__).parent / "data" / "initial_words.json"
+    
+    if not words_file.exists():
+        logger.warning("initial_words.json not found, skipping initial words load")
+        return
+    
+    with open(words_file, 'r', encoding='utf-8') as f:
+        words_data = json.load(f)
+    
+    session_maker = get_session_maker()
+    async with session_maker() as session:
+        from models.models import Vocabulary
+        from sqlalchemy import text
+        
+        # Ensure new column exists (simple migration)
+        try:
+            await session.execute(text("ALTER TABLE vocabulary ADD COLUMN IF NOT EXISTS example_sentence_pl TEXT"))
+            await session.commit()
+        except Exception as e:
+            logger.warning(f"Migration warning: {e}")
+        
+        # Add words if they don't exist
+        added_count = 0
+        for word_data in words_data:
+            # Check if word already exists
+            existing = await session.execute(
+                select(Vocabulary).where(Vocabulary.word_polish == word_data['word_polish'])
+            )
+            if existing.scalar_one_or_none():
+                continue
+            
+            word = Vocabulary(
+                word_polish=word_data['word_polish'],
+                translation_ua=word_data['translation_ua'],
+                translation_ru=word_data['translation_ru'],
+                example_sentence_pl=word_data.get('example_sentence_pl'),
+                category=word_data.get('category', 'general'),
+                difficulty_level=word_data.get('difficulty_level', 'A1')
+            )
+            session.add(word)
+            added_count += 1
+        
+        await session.commit()
+        logger.info(f"✅ Loaded {added_count} new vocabulary words")
+
+
+
 async def main():
     """Main bot function."""
     # Validate configuration
@@ -91,6 +143,10 @@ async def main():
     # Load initial data
     await load_initial_data()
     
+    # Load initial vocabulary words
+    await load_initial_words()
+
+    
     # Initialize bot and dispatcher
     bot = Bot(
         token=config.BOT_TOKEN,
@@ -101,6 +157,8 @@ async def main():
     
     # Register routers
     dp.include_router(common.router)
+    dp.include_router(flashcard_learning.router)
+    dp.include_router(fill_blank_training.router)
     dp.include_router(survival.router)
     dp.include_router(review.router)
     dp.include_router(settings.router)

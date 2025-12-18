@@ -7,8 +7,9 @@ from typing import List
 def get_main_menu_keyboard() -> InlineKeyboardMarkup:
     """Get main menu keyboard."""
     keyboard = InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(text="📚 Вивчати Слова (Картки)", callback_data="flashcard_learning")],
+        [InlineKeyboardButton(text="📝 Тренування (Пропуски)", callback_data="fill_blank_training")],
         [InlineKeyboardButton(text="🎯 Режим Виживання", callback_data="survival_mode")],
-        [InlineKeyboardButton(text="📚 Повторити Слова", callback_data="review_words")],
         [InlineKeyboardButton(text="📊 Мій Прогрес", callback_data="my_progress")],
         [InlineKeyboardButton(text="⚙️ Налаштування", callback_data="settings")]
     ])
@@ -85,4 +86,37 @@ def get_level_selection_keyboard() -> InlineKeyboardMarkup:
         [InlineKeyboardButton(text="🟠 B1 (Середній)", callback_data="level_B1")],
         [InlineKeyboardButton(text="🔙 Назад", callback_data="settings")]
     ])
+    return keyboard
+
+
+def get_flashcard_word_keyboard() -> InlineKeyboardMarkup:
+    """Get keyboard for showing word in flashcard mode."""
+    keyboard = InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(text="👀 Pokazati pereklad", callback_data="show_translation")],
+        [InlineKeyboardButton(text="🔙 Головне Меню", callback_data="main_menu")]
+    ])
+    return keyboard
+
+
+def get_flashcard_feedback_keyboard() -> InlineKeyboardMarkup:
+    """Get keyboard for flashcard feedback (know/don't know)."""
+    keyboard = InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(text="✅ Знаю", callback_data="flashcard_know"),
+         InlineKeyboardButton(text="❌ Не знаю", callback_data="flashcard_dont_know")],
+        [InlineKeyboardButton(text="➡️ Наступне Слово", callback_data="flashcard_next")],
+        [InlineKeyboardButton(text="🔙 Головне Меню", callback_data="main_menu")]
+    ])
+    return keyboard
+
+
+def get_bottom_menu_keyboard() -> ReplyKeyboardMarkup:
+    """Get persistent bottom menu keyboard."""
+    keyboard = ReplyKeyboardMarkup(
+        keyboard=[
+            [KeyboardButton(text="📚 Слова"), KeyboardButton(text="📝 Тренування")],
+            [KeyboardButton(text="🎯 Виживання"), KeyboardButton(text="📊 Прогрес")]
+        ],
+        resize_keyboard=True,
+        persistent=True
+    )
     return keyboard

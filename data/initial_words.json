@@ -1,0 +1,322 @@
+[
+    {
+        "word_polish": "Dzień dobry",
+        "translation_ua": "Добрий день",
+        "translation_ru": "Добрый день",
+        "example_sentence_pl": "Dzień dobry! Jak się Pan miewa?",
+        "category": "greetings",
+        "difficulty_level": "A1"
+    },
+    {
+        "word_polish": "Dziękuję",
+        "translation_ua": "Дякую",
+        "translation_ru": "Спасибо",
+        "example_sentence_pl": "Dziękuję bardzo za pomoc!",
+        "category": "greetings",
+        "difficulty_level": "A1"
+    },
+    {
+        "word_polish": "Proszę",
+        "translation_ua": "Будь ласка",
+        "translation_ru": "Пожалуйста",
+        "example_sentence_pl": "Proszę, weź to.",
+        "category": "greetings",
+        "difficulty_level": "A1"
+    },
+    {
+        "word_polish": "Przepraszam",
+        "translation_ua": "Вибачте",
+        "translation_ru": "Извините",
+        "example_sentence_pl": "Przepraszam, gdzie jest dworzec?",
+        "category": "greetings",
+        "difficulty_level": "A1"
+    },
+    {
+        "word_polish": "Tak",
+        "translation_ua": "Так",
+        "translation_ru": "Да",
+        "example_sentence_pl": "Tak, rozumiem.",
+        "category": "basic",
+        "difficulty_level": "A1"
+    },
+    {
+        "word_polish": "Nie",
+        "translation_ua": "Ні",
+        "translation_ru": "Нет",
+        "example_sentence_pl": "Nie, dziękuję.",
+        "category": "basic",
+        "difficulty_level": "A1"
+    },
+    {
+        "word_polish": "Gdzie",
+        "translation_ua": "Де",
+        "translation_ru": "Где",
+        "example_sentence_pl": "Gdzie jest apteka?",
+        "category": "questions",
+        "difficulty_level": "A1"
+    },
+    {
+        "word_polish": "Ile",
+        "translation_ua": "Скільки",
+        "translation_ru": "Сколько",
+        "example_sentence_pl": "Ile to kosztuje?",
+        "category": "questions",
+        "difficulty_level": "A1"
+    },
+    {
+        "word_polish": "Pomoc",
+        "translation_ua": "Допомога",
+        "translation_ru": "Помощь",
+        "example_sentence_pl": "Potrzebuję pomocy!",
+        "category": "emergency",
+        "difficulty_level": "A1"
+    },
+    {
+        "word_polish": "Woda",
+        "translation_ua": "Вода",
+        "translation_ru": "Вода",
+        "example_sentence_pl": "Poproszę butelkę wody.",
+        "category": "food",
+        "difficulty_level": "A1"
+    },
+    {
+        "word_polish": "Chleb",
+        "translation_ua": "Хліб",
+        "translation_ru": "Хлеб",
+        "example_sentence_pl": "Kupię chleb w piekarni.",
+        "category": "food",
+        "difficulty_level": "A1"
+    },
+    {
+        "word_polish": "Mleko",
+        "translation_ua": "Молоко",
+        "translation_ru": "Молоко",
+        "example_sentence_pl": "Mam mleko w lodówce.",
+        "category": "food",
+        "difficulty_level": "A1"
+    },
+    {
+        "word_polish": "Kawa",
+        "translation_ua": "Кава",
+        "translation_ru": "Кофе",
+        "example_sentence_pl": "Poproszę kawę z mlekiem.",
+        "category": "food",
+        "difficulty_level": "A1"
+    },
+    {
+        "word_polish": "Herbata",
+        "translation_ua": "Чай",
+        "translation_ru": "Чай",
+        "example_sentence_pl": "Wolę herbatę niż kawę.",
+        "category": "food",
+        "difficulty_level": "A1"
+    },
+    {
+        "word_polish": "Bilet",
+        "translation_ua": "Квиток",
+        "translation_ru": "Билет",
+        "example_sentence_pl": "Gdzie mogę kupić bilet?",
+        "category": "transport",
+        "difficulty_level": "A1"
+    },
+    {
+        "word_polish": "Autobus",
+        "translation_ua": "Автобус",
+        "translation_ru": "Автобус",
+        "example_sentence_pl": "Autobus jedzie do centrum.",
+        "category": "transport",
+        "difficulty_level": "A1"
+    },
+    {
+        "word_polish": "Dworzec",
+        "translation_ua": "Вокзал",
+        "translation_ru": "Вокзал",
+        "example_sentence_pl": "Dworzec jest blisko.",
+        "category": "transport",
+        "difficulty_level": "A1"
+    },
+    {
+        "word_polish": "Sklep",
+        "translation_ua": "Магазин",
+        "translation_ru": "Магазин",
+        "example_sentence_pl": "Sklep jest otwarty do 20:00.",
+        "category": "shopping",
+        "difficulty_level": "A1"
+    },
+    {
+        "word_polish": "Apteka",
+        "translation_ua": "Аптека",
+        "translation_ru": "Аптека",
+        "example_sentence_pl": "Apteka jest na rogu ulicy.",
+        "category": "shopping",
+        "difficulty_level": "A1"
+    },
+    {
+        "word_polish": "Bank",
+        "translation_ua": "Банк",
+        "translation_ru": "Банк",
+        "example_sentence_pl": "Bank otwiera się o 9:00.",
+        "category": "services",
+        "difficulty_level": "A1"
+    },
+    {
+        "word_polish": "Dom",
+        "translation_ua": "Дім",
+        "translation_ru": "Дом",
+        "example_sentence_pl": "Mój dom jest duży.",
+        "category": "housing",
+        "difficulty_level": "A1"
+    },
+    {
+        "word_polish": "Mieszkanie",
+        "translation_ua": "Квартира",
+        "translation_ru": "Квартира",
+        "example_sentence_pl": "Szukam mieszkania do wynajęcia.",
+        "category": "housing",
+        "difficulty_level": "A1"
+    },
+    {
+        "word_polish": "Praca",
+        "translation_ua": "Робота",
+        "translation_ru": "Работа",
+        "example_sentence_pl": "Szukam pracy w Warszawie.",
+        "category": "work",
+        "difficulty_level": "A1"
+    },
+    {
+        "word_polish": "Dokument",
+        "translation_ua": "Документ",
+        "translation_ru": "Документ",
+        "example_sentence_pl": "Proszę pokazać dokument tożsamości.",
+        "category": "documents",
+        "difficulty_level": "A1"
+    },
+    {
+        "word_polish": "Paszport",
+        "translation_ua": "Паспорт",
+        "translation_ru": "Паспорт",
+        "example_sentence_pl": "Mam paszport ukraiński.",
+        "category": "documents",
+        "difficulty_level": "A1"
+    },
+    {
+        "word_polish": "Lekarz",
+        "translation_ua": "Лікар",
+        "translation_ru": "Врач",
+        "example_sentence_pl": "Muszę iść do lekarza.",
+        "category": "health",
+        "difficulty_level": "A1"
+    },
+    {
+        "word_polish": "Szpital",
+        "translation_ua": "Лікарня",
+        "translation_ru": "Больница",
+        "example_sentence_pl": "Szpital jest niedaleko stąd.",
+        "category": "health",
+        "difficulty_level": "A1"
+    },
+    {
+        "word_polish": "Dzieci",
+        "translation_ua": "Діти",
+        "translation_ru": "Дети",
+        "example_sentence_pl": "Mam dwoje dzieci.",
+        "category": "family",
+        "difficulty_level": "A1"
+    },
+    {
+        "word_polish": "Szkoła",
+        "translation_ua": "Школа",
+        "translation_ru": "Школа",
+        "example_sentence_pl": "Szkoła zaczyna się o 8:00.",
+        "category": "education",
+        "difficulty_level": "A1"
+    },
+    {
+        "word_polish": "Telefon",
+        "translation_ua": "Телефон",
+        "translation_ru": "Телефон",
+        "example_sentence_pl": "To jest mój numer telefonu.",
+        "category": "communication",
+        "difficulty_level": "A1"
+    },
+    {
+        "word_polish": "Adres",
+        "translation_ua": "Адреса",
+        "translation_ru": "Адрес",
+        "example_sentence_pl": "Jaki jest twój adres?",
+        "category": "communication",
+        "difficulty_level": "A1"
+    },
+    {
+        "word_polish": "Pieniądze",
+        "translation_ua": "Гроші",
+        "translation_ru": "Деньги",
+        "example_sentence_pl": "Nie mam pieniędzy.",
+        "category": "money",
+        "difficulty_level": "A1"
+    },
+    {
+        "word_polish": "Złoty",
+        "translation_ua": "Злотий",
+        "translation_ru": "Злотый",
+        "example_sentence_pl": "To kosztuje 20 złotych.",
+        "category": "money",
+        "difficulty_level": "A1"
+    },
+    {
+        "word_polish": "Najbliższy",
+        "translation_ua": "Найближчий",
+        "translation_ru": "Ближайший",
+        "example_sentence_pl": "Gdzie jest najbliższy supermarket?",
+        "category": "directions",
+        "difficulty_level": "A1"
+    },
+    {
+        "word_polish": "Prawo",
+        "translation_ua": "Право (направо)",
+        "translation_ru": "Направо",
+        "example_sentence_pl": "Skręć w prawo na skrzyżowaniu.",
+        "category": "directions",
+        "difficulty_level": "A1"
+    },
+    {
+        "word_polish": "Lewo",
+        "translation_ua": "Ліво",
+        "translation_ru": "Налево",
+        "example_sentence_pl": "Poczta jest po lewej stronie.",
+        "category": "directions",
+        "difficulty_level": "A1"
+    },
+    {
+        "word_polish": "Prosto",
+        "translation_ua": "Прямо",
+        "translation_ru": "Прямо",
+        "example_sentence_pl": "Idź prosto 200 metrów.",
+        "category": "directions",
+        "difficulty_level": "A1"
+    },
+    {
+        "word_polish": "Rozumiem",
+        "translation_ua": "Розумію",
+        "translation_ru": "Понимаю",
+        "example_sentence_pl": "Tak, rozumiem po polsku.",
+        "category": "communication",
+        "difficulty_level": "A1"
+    },
+    {
+        "word_polish": "Mówić",
+        "translation_ua": "Говорити",
+        "translation_ru": "Говорить",
+        "example_sentence_pl": "Uczę się mówić po polsku.",
+        "category": "communication",
+        "difficulty_level": "A1"
+    },
+    {
+        "word_polish": "Czas",
+        "translation_ua": "Час",
+        "translation_ru": "Время",
+        "example_sentence_pl": "Która jest godzina? Jaki jest czas?",
+        "category": "time",
+        "difficulty_level": "A1"
+    }
+]

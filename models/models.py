@@ -37,11 +37,13 @@ class Vocabulary(Base):
     translation_ua = Column(String(255), nullable=False)
     translation_ru = Column(String(255), nullable=False)
     context_sentence = Column(Text, nullable=True)
+    example_sentence_pl = Column(Text, nullable=True)  # Example sentence in Polish for flashcards
     difficulty_level = Column(String(10), default='A1')  # A1, A2, B1
     category = Column(String(100), nullable=True)  # e.g., "food", "transport"
     
     # Relationships
     user_progress = relationship('UserProgress', back_populates='word', cascade='all, delete-orphan')
+    learning_stats = relationship('WordLearningStats', back_populates='word', cascade='all, delete-orphan')
     
     def __repr__(self):
         return f"<Vocabulary(word={self.word_polish}, level={self.difficulty_level})>"
@@ -118,6 +120,30 @@ class UserQuizHistory(Base):
     
     def __repr__(self):
         return f"<UserQuizHistory(user_id={self.user_id}, is_correct={self.is_correct})>"
+
+
+class WordLearningStats(Base):
+    """Track flashcard learning statistics for words."""
+    __tablename__ = 'word_learning_stats'
+    
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey('users.id'), nullable=False)
+    word_id = Column(Integer, ForeignKey('vocabulary.id'), nullable=False)
+    
+    # Statistics
+    know_count = Column(Integer, default=0)  # Green button presses
+    dont_know_count = Column(Integer, default=0)  # Red button presses
+    last_shown = Column(DateTime, nullable=True)  # Last time shown to user
+    priority_score = Column(Float, default=100.0)  # Priority for showing (higher = more urgent)
+    
+    created_at = Column(DateTime, default=func.now())
+    updated_at = Column(DateTime, default=func.now(), onupdate=func.now())
+    
+    # Relationships
+    word = relationship('Vocabulary', back_populates='learning_stats')
+    
+    def __repr__(self):
+        return f"<WordLearningStats(user_id={self.user_id}, word_id={self.word_id}, priority={self.priority_score})>"
 
 
 # Database engine and session management
