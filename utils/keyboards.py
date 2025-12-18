@@ -53,8 +53,7 @@ def get_quiz_keyboard(options: List[str], question_id: str = "quiz", show_cancel
 def get_continue_keyboard(next_action: str = "continue") -> InlineKeyboardMarkup:
     """Get continue/next keyboard."""
     keyboard = InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text="➡️", callback_data=next_action)],
-        [InlineKeyboardButton(text="🏠", callback_data="main_menu")]
+        [InlineKeyboardButton(text="➡️", callback_data=next_action)]
     ])
     return keyboard
 
@@ -159,8 +158,7 @@ def get_session_complete_keyboard(errors_count: int = 0) -> InlineKeyboardMarkup
 def get_flashcard_word_keyboard() -> InlineKeyboardMarkup:
     """Get keyboard for showing word in flashcard mode."""
     keyboard = InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text="👀", callback_data="show_translation")],
-        [InlineKeyboardButton(text="🏠", callback_data="main_menu")]
+        [InlineKeyboardButton(text="👀", callback_data="show_translation")]
     ])
     return keyboard
 
@@ -171,8 +169,7 @@ def get_flashcard_feedback_keyboard() -> InlineKeyboardMarkup:
         [InlineKeyboardButton(text="✅", callback_data="flashcard_know"),
          InlineKeyboardButton(text="❌", callback_data="flashcard_dont_know")],
         [InlineKeyboardButton(text="➡️", callback_data="flashcard_next")],
-        [InlineKeyboardButton(text="🏠", callback_data="main_menu"),
-         InlineKeyboardButton(text="🗑️", callback_data="flashcard_delete")]
+        [InlineKeyboardButton(text="🗑️", callback_data="flashcard_delete")]
     ])
     return keyboard
 
@@ -181,10 +178,9 @@ def get_bottom_menu_keyboard() -> ReplyKeyboardMarkup:
     """Get persistent bottom menu keyboard."""
     keyboard = ReplyKeyboardMarkup(
         keyboard=[
-            [KeyboardButton(text="📚 Слова"), KeyboardButton(text="📝 Тренування")],
-            [KeyboardButton(text="🎯 Виживання"), KeyboardButton(text="📊 Прогрес")]
+            [KeyboardButton(text="🏠"), KeyboardButton(text="📚"), KeyboardButton(text="📝"), KeyboardButton(text="📊")]
         ],
         resize_keyboard=True,
-        persistent=True
+        is_persistent=True
     )
     return keyboard

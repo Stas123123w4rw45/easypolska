@@ -29,6 +29,7 @@ class QuizData(BaseModel):
 class FillInBlankData(BaseModel):
     """Validated fill-in-the-blank question data."""
     sentence: str = Field(..., min_length=10, max_length=500)
+    sentence_translation: str = Field(default="", max_length=500)  # Ukrainian translation
     correct_answer: str = Field(..., min_length=1, max_length=100)
     distractor_1: str = Field(..., min_length=1, max_length=100)
     distractor_2: str = Field(..., min_length=1, max_length=100)

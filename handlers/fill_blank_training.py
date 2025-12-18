@@ -142,11 +142,14 @@ async def show_fill_blank_question(callback: CallbackQuery, state: FSMContext):
     )
     
     progress_text = f"Питання: {current_q + 1}/{len(due_words)}"
-    question_text = (
-        f"📝 <b>{progress_text}</b>\n\n"
-        f"Заповни пропуск:\n\n"
-        f"<i>{question_data.sentence}</i>"
-    )
+    
+    # Build question with Polish sentence and Ukrainian translation
+    question_text = f"📝 <b>{progress_text}</b>\n\n"
+    question_text += f"<i>{question_data.sentence}</i>\n"
+    
+    # Add Ukrainian translation in spoiler if available
+    if question_data.sentence_translation:
+        question_text += f"\n<spoiler>🇺🇦 {question_data.sentence_translation}</spoiler>"
     
     await callback.message.answer(
         question_text,
