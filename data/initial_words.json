@@ -4,6 +4,7 @@
         "translation_ua": "Добрий день",
         "translation_ru": "Добрый день",
         "example_sentence_pl": "Dzień dobry! Jak się Pan miewa?",
+        "emoji": "👋",
         "category": "greetings",
         "difficulty_level": "A1"
     },
@@ -12,6 +13,7 @@
         "translation_ua": "Дякую",
         "translation_ru": "Спасибо",
         "example_sentence_pl": "Dziękuję bardzo za pomoc!",
+        "emoji": "🙏",
         "category": "greetings",
         "difficulty_level": "A1"
     },
@@ -20,6 +22,7 @@
         "translation_ua": "Будь ласка",
         "translation_ru": "Пожалуйста",
         "example_sentence_pl": "Proszę, weź to.",
+        "emoji": "🤝",
         "category": "greetings",
         "difficulty_level": "A1"
     },
@@ -28,6 +31,7 @@
         "translation_ua": "Вибачте",
         "translation_ru": "Извините",
         "example_sentence_pl": "Przepraszam, gdzie jest dworzec?",
+        "emoji": "🙇",
         "category": "greetings",
         "difficulty_level": "A1"
     },
@@ -36,6 +40,7 @@
         "translation_ua": "Так",
         "translation_ru": "Да",
         "example_sentence_pl": "Tak, rozumiem.",
+        "emoji": "✅",
         "category": "basic",
         "difficulty_level": "A1"
     },
@@ -44,6 +49,7 @@
         "translation_ua": "Ні",
         "translation_ru": "Нет",
         "example_sentence_pl": "Nie, dziękuję.",
+        "emoji": "❌",
         "category": "basic",
         "difficulty_level": "A1"
     },
@@ -52,6 +58,7 @@
         "translation_ua": "Де",
         "translation_ru": "Где",
         "example_sentence_pl": "Gdzie jest apteka?",
+        "emoji": "📍",
         "category": "questions",
         "difficulty_level": "A1"
     },
@@ -60,6 +67,7 @@
         "translation_ua": "Скільки",
         "translation_ru": "Сколько",
         "example_sentence_pl": "Ile to kosztuje?",
+        "emoji": "🔢",
         "category": "questions",
         "difficulty_level": "A1"
     },
@@ -68,6 +76,7 @@
         "translation_ua": "Допомога",
         "translation_ru": "Помощь",
         "example_sentence_pl": "Potrzebuję pomocy!",
+        "emoji": "🆘",
         "category": "emergency",
         "difficulty_level": "A1"
     },
@@ -76,6 +85,7 @@
         "translation_ua": "Вода",
         "translation_ru": "Вода",
         "example_sentence_pl": "Poproszę butelkę wody.",
+        "emoji": "💧",
         "category": "food",
         "difficulty_level": "A1"
     },
@@ -84,6 +94,7 @@
         "translation_ua": "Хліб",
         "translation_ru": "Хлеб",
         "example_sentence_pl": "Kupię chleb w piekarni.",
+        "emoji": "🍞",
         "category": "food",
         "difficulty_level": "A1"
     },
@@ -92,6 +103,7 @@
         "translation_ua": "Молоко",
         "translation_ru": "Молоко",
         "example_sentence_pl": "Mam mleko w lodówce.",
+        "emoji": "🥛",
         "category": "food",
         "difficulty_level": "A1"
     },
@@ -100,6 +112,7 @@
         "translation_ua": "Кава",
         "translation_ru": "Кофе",
         "example_sentence_pl": "Poproszę kawę z mlekiem.",
+        "emoji": "☕",
         "category": "food",
         "difficulty_level": "A1"
     },
@@ -108,6 +121,7 @@
         "translation_ua": "Чай",
         "translation_ru": "Чай",
         "example_sentence_pl": "Wolę herbatę niż kawę.",
+        "emoji": "🍵",
         "category": "food",
         "difficulty_level": "A1"
     },
@@ -116,6 +130,7 @@
         "translation_ua": "Квиток",
         "translation_ru": "Билет",
         "example_sentence_pl": "Gdzie mogę kupić bilet?",
+        "emoji": "🎫",
         "category": "transport",
         "difficulty_level": "A1"
     },
@@ -124,6 +139,7 @@
         "translation_ua": "Автобус",
         "translation_ru": "Автобус",
         "example_sentence_pl": "Autobus jedzie do centrum.",
+        "emoji": "🚌",
         "category": "transport",
         "difficulty_level": "A1"
     },
@@ -132,6 +148,7 @@
         "translation_ua": "Вокзал",
         "translation_ru": "Вокзал",
         "example_sentence_pl": "Dworzec jest blisko.",
+        "emoji": "🚉",
         "category": "transport",
         "difficulty_level": "A1"
     },
@@ -140,6 +157,7 @@
         "translation_ua": "Магазин",
         "translation_ru": "Магазин",
         "example_sentence_pl": "Sklep jest otwarty do 20:00.",
+        "emoji": "🏪",
         "category": "shopping",
         "difficulty_level": "A1"
     },
@@ -148,6 +166,7 @@
         "translation_ua": "Аптека",
         "translation_ru": "Аптека",
         "example_sentence_pl": "Apteka jest na rogu ulicy.",
+        "emoji": "💊",
         "category": "shopping",
         "difficulty_level": "A1"
     },
@@ -156,6 +175,7 @@
         "translation_ua": "Банк",
         "translation_ru": "Банк",
         "example_sentence_pl": "Bank otwiera się o 9:00.",
+        "emoji": "🏦",
         "category": "services",
         "difficulty_level": "A1"
     },
@@ -164,6 +184,7 @@
         "translation_ua": "Дім",
         "translation_ru": "Дом",
         "example_sentence_pl": "Mój dom jest duży.",
+        "emoji": "🏠",
         "category": "housing",
         "difficulty_level": "A1"
     },
@@ -172,6 +193,7 @@
         "translation_ua": "Квартира",
         "translation_ru": "Квартира",
         "example_sentence_pl": "Szukam mieszkania do wynajęcia.",
+        "emoji": "🏢",
         "category": "housing",
         "difficulty_level": "A1"
     },
@@ -180,6 +202,7 @@
         "translation_ua": "Робота",
         "translation_ru": "Работа",
         "example_sentence_pl": "Szukam pracy w Warszawie.",
+        "emoji": "💼",
         "category": "work",
         "difficulty_level": "A1"
     },
@@ -188,6 +211,7 @@
         "translation_ua": "Документ",
         "translation_ru": "Документ",
         "example_sentence_pl": "Proszę pokazać dokument tożsamości.",
+        "emoji": "📄",
         "category": "documents",
         "difficulty_level": "A1"
     },
@@ -196,6 +220,7 @@
         "translation_ua": "Паспорт",
         "translation_ru": "Паспорт",
         "example_sentence_pl": "Mam paszport ukraiński.",
+        "emoji": "🛂",
         "category": "documents",
         "difficulty_level": "A1"
     },
@@ -204,6 +229,7 @@
         "translation_ua": "Лікар",
         "translation_ru": "Врач",
         "example_sentence_pl": "Muszę iść do lekarza.",
+        "emoji": "👨‍⚕️",
         "category": "health",
         "difficulty_level": "A1"
     },
@@ -212,6 +238,7 @@
         "translation_ua": "Лікарня",
         "translation_ru": "Больница",
         "example_sentence_pl": "Szpital jest niedaleko stąd.",
+        "emoji": "🏥",
         "category": "health",
         "difficulty_level": "A1"
     },
@@ -220,6 +247,7 @@
         "translation_ua": "Діти",
         "translation_ru": "Дети",
         "example_sentence_pl": "Mam dwoje dzieci.",
+        "emoji": "👶",
         "category": "family",
         "difficulty_level": "A1"
     },
@@ -228,6 +256,7 @@
         "translation_ua": "Школа",
         "translation_ru": "Школа",
         "example_sentence_pl": "Szkoła zaczyna się o 8:00.",
+        "emoji": "🏫",
         "category": "education",
         "difficulty_level": "A1"
     },
@@ -236,6 +265,7 @@
         "translation_ua": "Телефон",
         "translation_ru": "Телефон",
         "example_sentence_pl": "To jest mój numer telefonu.",
+        "emoji": "📱",
         "category": "communication",
         "difficulty_level": "A1"
     },
@@ -244,6 +274,7 @@
         "translation_ua": "Адреса",
         "translation_ru": "Адрес",
         "example_sentence_pl": "Jaki jest twój adres?",
+        "emoji": "📮",
         "category": "communication",
         "difficulty_level": "A1"
     },
@@ -252,6 +283,7 @@
         "translation_ua": "Гроші",
         "translation_ru": "Деньги",
         "example_sentence_pl": "Nie mam pieniędzy.",
+        "emoji": "💰",
         "category": "money",
         "difficulty_level": "A1"
     },
@@ -260,6 +292,7 @@
         "translation_ua": "Злотий",
         "translation_ru": "Злотый",
         "example_sentence_pl": "To kosztuje 20 złotych.",
+        "emoji": "💵",
         "category": "money",
         "difficulty_level": "A1"
     },
@@ -268,6 +301,7 @@
         "translation_ua": "Найближчий",
         "translation_ru": "Ближайший",
         "example_sentence_pl": "Gdzie jest najbliższy supermarket?",
+        "emoji": "⚡",
         "category": "directions",
         "difficulty_level": "A1"
     },
@@ -276,6 +310,7 @@
         "translation_ua": "Право (направо)",
         "translation_ru": "Направо",
         "example_sentence_pl": "Skręć w prawo na skrzyżowaniu.",
+        "emoji": "➡️",
         "category": "directions",
         "difficulty_level": "A1"
     },
@@ -284,6 +319,7 @@
         "translation_ua": "Ліво",
         "translation_ru": "Налево",
         "example_sentence_pl": "Poczta jest po lewej stronie.",
+        "emoji": "⬅️",
         "category": "directions",
         "difficulty_level": "A1"
     },
@@ -292,6 +328,7 @@
         "translation_ua": "Прямо",
         "translation_ru": "Прямо",
         "example_sentence_pl": "Idź prosto 200 metrów.",
+        "emoji": "⬆️",
         "category": "directions",
         "difficulty_level": "A1"
     },
@@ -300,6 +337,7 @@
         "translation_ua": "Розумію",
         "translation_ru": "Понимаю",
         "example_sentence_pl": "Tak, rozumiem po polsku.",
+        "emoji": "💡",
         "category": "communication",
         "difficulty_level": "A1"
     },
@@ -308,6 +346,7 @@
         "translation_ua": "Говорити",
         "translation_ru": "Говорить",
         "example_sentence_pl": "Uczę się mówić po polsku.",
+        "emoji": "🗣️",
         "category": "communication",
         "difficulty_level": "A1"
     },
@@ -316,6 +355,7 @@
         "translation_ua": "Час",
         "translation_ru": "Время",
         "example_sentence_pl": "Która jest godzina? Jaki jest czas?",
+        "emoji": "⏰",
         "category": "time",
         "difficulty_level": "A1"
     }

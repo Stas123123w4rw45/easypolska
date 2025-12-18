@@ -14,7 +14,7 @@ from sqlalchemy import select
 
 import config
 from models.models import init_db, close_db, get_session_maker, Situation
-from handlers import common, survival, review, settings, flashcard_learning, fill_blank_training
+from handlers import common, survival, review, settings, flashcard_learning, fill_blank_training, vocabulary_browser
 
 # Configure logging
 logging.basicConfig(
@@ -112,6 +112,7 @@ async def load_initial_words():
                 translation_ua=word_data['translation_ua'],
                 translation_ru=word_data['translation_ru'],
                 example_sentence_pl=word_data.get('example_sentence_pl'),
+                emoji=word_data.get('emoji'),
                 category=word_data.get('category', 'general'),
                 difficulty_level=word_data.get('difficulty_level', 'A1')
             )
@@ -159,6 +160,7 @@ async def main():
     dp.include_router(common.router)
     dp.include_router(flashcard_learning.router)
     dp.include_router(fill_blank_training.router)
+    dp.include_router(vocabulary_browser.router)
     dp.include_router(survival.router)
     dp.include_router(review.router)
     dp.include_router(settings.router)

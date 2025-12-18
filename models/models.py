@@ -38,6 +38,7 @@ class Vocabulary(Base):
     translation_ru = Column(String(255), nullable=False)
     context_sentence = Column(Text, nullable=True)
     example_sentence_pl = Column(Text, nullable=True)  # Example sentence in Polish for flashcards
+    emoji = Column(String(10), nullable=True)  # Emoji for visual representation
     difficulty_level = Column(String(10), default='A1')  # A1, A2, B1
     category = Column(String(100), nullable=True)  # e.g., "food", "transport"
     

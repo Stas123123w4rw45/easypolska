@@ -258,9 +258,27 @@ async def start_quiz(callback: CallbackQuery, state: FSMContext):
     
     await callback.message.answer(
         question_text,
-        reply_markup=get_quiz_keyboard(answers, "quiz"),
+        reply_markup=get_quiz_keyboard(answers, "quiz", show_cancel=True),
         parse_mode='HTML'
     )
+
+
+@router.callback_query(F.data == "quiz_cancel", SurvivalMode.quiz_active)
+async def cancel_quiz(callback: CallbackQuery, state: FSMContext):
+    """Cancel quiz and return to main menu."""
+    text = (
+        "🚫 <b>Тренування скасовано</b>\n\n"
+        "Прогрес не збережено.\n"
+        "Можеш спробувати ще раз коли будеш готовий!"
+    )
+    
+    await state.set_state(MainMenu.menu)
+    await callback.message.edit_text(
+        text,
+        reply_markup=get_main_menu_keyboard(),
+        parse_mode='HTML'
+    )
+    await callback.answer()
 
 
 @router.callback_query(F.data.startswith("quiz_"), SurvivalMode.quiz_active)

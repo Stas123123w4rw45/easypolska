@@ -90,17 +90,16 @@ async def show_next_word(callback: CallbackQuery, state: FSMContext):
             current_stats_id=stats.id,
             word_polish=word.word_polish,
             word_ukrainian=word.translation_ua,
-            word_example=word.example_sentence_pl
+            word_example=word.example_sentence_pl,
+            word_emoji=word.emoji
         )
     
     await state.set_state(FlashcardLearning.show_word)
     
-    # Show word card (only Polish word initially)
-    text = (
-        "📖 <b>Слово:</b>\n\n"
-        f"<b><i>{word.word_polish}</i></b>\n\n"
-        "👇 Натисни кнопку щоб побачити переклад"
-    )
+    # Show word card (only Polish word - simplified with emoji)
+    emoji = word.emoji if word.emoji else ""
+    text = f"{emoji} <b>{word.word_polish}</b>" if word.emoji else ""
+    text = f"{emoji} <b>{word.word_polish}</b>"
     
     await callback.message.edit_text(
         text,
@@ -117,16 +116,16 @@ async def show_translation(callback: CallbackQuery, state: FSMContext):
     
     await state.set_state(FlashcardLearning.show_translation)
     
-    # Build text with translation and example
-    text = (
+    # Build text with emoji, translation and example
+    emoji = data.get('word_emoji', '')
+    text = f"{emoji} " if emoji else ""
+    text += (
         f"🇵🇱 <b>{data['word_polish']}</b>\n"
         f"🇺🇦 <b>{data['word_ukrainian']}</b>\n\n"
     )
     
     if data.get('word_example'):
-        text += f"<i>{data['word_example']}</i>\n\n"
-    
-    text += "Чи знаєш ти це слово?"
+        text += f"<i>{data['word_example']}</i>"
     
     await callback.message.edit_text(
         text,
@@ -149,9 +148,12 @@ async def handle_know_button(callback: CallbackQuery, state: FSMContext):
             knows_word=True
         )
     
-    await callback.answer("✅ Чудово!", show_alert=False)
+    # Track session
+    session_words = data.get('session_words', [])
+    session_words.append(data['current_word_id'])
+    await state.update_data(session_words=session_words)
     
-    # Show next word
+    await callback.answer("✅")
     await show_next_word(callback, state)
 
 
@@ -168,7 +170,50 @@ async def handle_dont_know_button(callback: CallbackQuery, state: FSMContext):
             knows_word=False
         )
     
-    await callback.answer("📝 Повторимо пізніше!", show_alert=False)
+    # Track session errors
+    session_words = data.get('session_words', [])
+    session_errors = data.get('session_errors', [])
+    session_words.append(data['current_word_id'])
+    session_errors.append(data['current_word_id'])
     
-    # Show next word
+    await state.update_data(
+        session_words=session_words,
+        session_errors=session_errors
+    )
+    
+    await callback.answer("📝")
     await show_next_word(callback, state)
+
+
+@router.callback_query(F.data == "flashcard_delete")
+async def delete_word_from_learning(callback: CallbackQuery, state: FSMContext):
+    """Delete word from learning list."""
+    data = await state.get_data()
+    word_id = data.get('current_word_id')
+    
+    if not word_id:
+        await callback.answer("❌ Помилка", show_alert=True)
+        return
+    
+    session_maker = models.get_session_maker()
+    async with session_maker() as session:
+        user_query = select(User).where(User.telegram_id == callback.from_user.id)
+        user_result = await session.execute(user_query)
+        user = user_result.scalar_one_or_none()
+        
+        from models.models import WordLearningStats
+        stats_query = select(WordLearningStats).where(
+            WordLearningStats.user_id == user.id,
+            WordLearningStats.word_id == word_id
+        )
+        stats_result = await session.execute(stats_query)
+        stats = stats_result.scalar_one_or_none()
+        
+        if stats:
+            await session.delete(stats)
+            await session.commit()
+            await callback.answer("🗑️ Видалено!", show_alert=True)
+            # Show next word
+            await show_next_word(callback, state)
+        else:
+            await callback.answer("❌ Не знайдено", show_alert=True)
