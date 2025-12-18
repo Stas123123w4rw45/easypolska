@@ -43,8 +43,7 @@ async def load_initial_data():
     
     session_maker = get_session_maker()
     async with session_maker() as session:
-        # Delete all existing situations to reload fresh data
-        from sqlalchemy import delete, text
+        from sqlalchemy import text
         
         # Ensure column exists (simple migration)
         try:
@@ -52,11 +51,16 @@ async def load_initial_data():
             await session.commit()
         except Exception as e:
             logger.warning(f"Migration warning: {e}")
-            
-        await session.execute(delete(Situation))
         
-        # Add all situations from JSON
+        # Add situations only if they don't exist (don't delete to avoid foreign key issues)
         for situation_data in situations_data:
+            # Check if situation exists by title
+            existing = await session.execute(
+                select(Situation).where(Situation.title == situation_data['title'])
+            )
+            if existing.scalar_one_or_none():
+                continue  # Skip if already exists
+            
             situation = Situation(
                 title=situation_data['title'],
                 description=situation_data['description'],
@@ -90,9 +94,10 @@ async def load_initial_words():
         from models.models import Vocabulary
         from sqlalchemy import text
         
-        # Ensure new column exists (simple migration)
+        # Ensure new columns exist (simple migration)
         try:
             await session.execute(text("ALTER TABLE vocabulary ADD COLUMN IF NOT EXISTS example_sentence_pl TEXT"))
+            await session.execute(text("ALTER TABLE vocabulary ADD COLUMN IF NOT EXISTS emoji VARCHAR(10)"))
             await session.commit()
         except Exception as e:
             logger.warning(f"Migration warning: {e}")
