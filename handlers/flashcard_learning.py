@@ -139,22 +139,20 @@ async def handle_know_button(callback: CallbackQuery, state: FSMContext):
     """Handle 'I know this word' button press."""
     data = await state.get_data()
     
-    if not data.get('current_stats_id'):
-        await callback.answer("❌")
-        return
-    
-    session_maker = models.get_session_maker()
-    async with session_maker() as session:
-        await flashcard_service.update_word_stats(
-            session,
-            stats_id=data['current_stats_id'],
-            knows_word=True
-        )
-    
-    # Track session
-    session_words = data.get('session_words', [])
-    session_words.append(data['current_word_id'])
-    await state.update_data(session_words=session_words)
+    # If state is missing (e.g. bot restarted), just skip stats update and go to next word
+    if data.get('current_stats_id'):
+        session_maker = models.get_session_maker()
+        async with session_maker() as session:
+            await flashcard_service.update_word_stats(
+                session,
+                stats_id=data['current_stats_id'],
+                knows_word=True
+            )
+            
+        # Track session
+        session_words = data.get('session_words', [])
+        session_words.append(data['current_word_id'])
+        await state.update_data(session_words=session_words)
     
     await callback.answer("✅")
     
@@ -203,28 +201,26 @@ async def handle_dont_know_button(callback: CallbackQuery, state: FSMContext):
     """Handle 'I don't know this word' button press."""
     data = await state.get_data()
     
-    if not data.get('current_stats_id'):
-        await callback.answer("❌")
-        return
-    
-    session_maker = models.get_session_maker()
-    async with session_maker() as session:
-        await flashcard_service.update_word_stats(
-            session,
-            stats_id=data['current_stats_id'],
-            knows_word=False
+    # If state is missing (e.g. bot restarted), just skip stats update and go to next word
+    if data.get('current_stats_id'):
+        session_maker = models.get_session_maker()
+        async with session_maker() as session:
+            await flashcard_service.update_word_stats(
+                session,
+                stats_id=data['current_stats_id'],
+                knows_word=False
+            )
+        
+        # Track session errors
+        session_words = data.get('session_words', [])
+        session_errors = data.get('session_errors', [])
+        session_words.append(data['current_word_id'])
+        session_errors.append(data['current_word_id'])
+        
+        await state.update_data(
+            session_words=session_words,
+            session_errors=session_errors
         )
-    
-    # Track session errors
-    session_words = data.get('session_words', [])
-    session_errors = data.get('session_errors', [])
-    session_words.append(data['current_word_id'])
-    session_errors.append(data['current_word_id'])
-    
-    await state.update_data(
-        session_words=session_words,
-        session_errors=session_errors
-    )
     
     await callback.answer("📝")
     
