@@ -1,4 +1,3 @@
-```
 """Common handlers for /start, /help, and basic commands."""
 
 from aiogram import Router, F
