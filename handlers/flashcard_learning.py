@@ -96,10 +96,9 @@ async def show_next_word(callback: CallbackQuery, state: FSMContext):
     
     await state.set_state(FlashcardLearning.show_word)
     
-    # Show word card (only Polish word - simplified with emoji)
+    # Show word card with spacing
     emoji = word.emoji if word.emoji else ""
-    text = f"{emoji} <b>{word.word_polish}</b>" if word.emoji else ""
-    text = f"{emoji} <b>{word.word_polish}</b>"
+    text = f"\n\n{emoji} <b>{word.word_polish}</b>\n\n"
     
     await callback.message.edit_text(
         text,
@@ -116,16 +115,16 @@ async def show_translation(callback: CallbackQuery, state: FSMContext):
     
     await state.set_state(FlashcardLearning.show_translation)
     
-    # Build text with emoji, translation and example
+    # Build text with spacing, emoji, translation and example
     emoji = data.get('word_emoji', '')
-    text = f"{emoji} " if emoji else ""
-    text += (
-        f"🇵🇱 <b>{data['word_polish']}</b>\n"
-        f"🇺🇦 <b>{data['word_ukrainian']}</b>\n\n"
-    )
+    text = f"\n\n{emoji} "
+    text += f"🇵🇱 <b>{data['word_polish']}</b>\n"
+    text += f"🇺🇦 <b>{data['word_ukrainian']}</b>\n\n"
     
     if data.get('word_example'):
         text += f"<i>{data['word_example']}</i>"
+    
+    text += "\n\n"
     
     await callback.message.edit_text(
         text,
@@ -154,6 +153,9 @@ async def handle_know_button(callback: CallbackQuery, state: FSMContext):
     await state.update_data(session_words=session_words)
     
     await callback.answer("✅")
+    
+    # Automatically show next word
+    await state.set_state(FlashcardLearning.show_word)
     await show_next_word(callback, state)
 
 
@@ -182,6 +184,9 @@ async def handle_dont_know_button(callback: CallbackQuery, state: FSMContext):
     )
     
     await callback.answer("📝")
+    
+    # Automatically show next word
+    await state.set_state(FlashcardLearning.show_word)
     await show_next_word(callback, state)
 
 

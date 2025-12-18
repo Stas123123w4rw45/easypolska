@@ -128,13 +128,17 @@ class FlashcardService:
         # Update last shown time
         stats.last_shown = datetime.utcnow()
         
-        # Recalculate priority
-        priority = (
-            (stats.dont_know_count * 3.0)
-            - (stats.know_count * 1.0)
-            + 10.0
-        )
-        stats.priority_score = max(0.0, priority)
+        # SMART LEARNING: Recalculate priority
+        # Words with mistakes get MUCH higher priority (exponential)
+        mistake_bonus = (stats.dont_know_count ** 1.5) * 20
+        knowledge_penalty = (stats.know_count ** 0.8) * 8
+        
+        # If mastered (3+ correct, 0 wrong), very low priority
+        if stats.know_count >= 3 and stats.dont_know_count == 0:
+            knowledge_penalty += 50
+        
+        priority = 100.0 + mistake_bonus - knowledge_penalty
+        stats.priority_score = max(1.0, priority)
         
         await session.commit()
     
