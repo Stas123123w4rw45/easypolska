@@ -57,7 +57,7 @@ async def start_flashcard_learning(callback: CallbackQuery, state: FSMContext):
     await callback.answer()
 
 
-@router.callback_query(F.data == "flashcard_show_next", FlashcardLearning.show_word)
+@router.callback_query(F.data == "flashcard_show_next")
 @router.callback_query(F.data == "flashcard_next")
 async def show_next_word(callback: CallbackQuery, state: FSMContext):
     """Show next word card."""
@@ -96,9 +96,9 @@ async def show_next_word(callback: CallbackQuery, state: FSMContext):
     
     await state.set_state(FlashcardLearning.show_word)
     
-    # Show word card with spacing
-    emoji = word.emoji if word.emoji else ""
-    text = f"\n\n{emoji} <b>{word.word_polish}</b>\n\n"
+    # Show word card with visual separators
+    emoji = word.emoji if word.emoji else "📝"
+    text = f"➖➖➖➖➖➖➖➖\n\n{emoji} <b>{word.word_polish}</b>\n\n➖➖➖➖➖➖➖➖"
     
     await callback.message.edit_text(
         text,
@@ -115,16 +115,16 @@ async def show_translation(callback: CallbackQuery, state: FSMContext):
     
     await state.set_state(FlashcardLearning.show_translation)
     
-    # Build text with spacing, emoji, translation and example
-    emoji = data.get('word_emoji', '')
-    text = f"\n\n{emoji} "
-    text += f"🇵🇱 <b>{data['word_polish']}</b>\n"
-    text += f"🇺🇦 <b>{data['word_ukrainian']}</b>\n\n"
+    # Build text with visual separators
+    emoji = data.get('word_emoji') or "📝"
+    text = f"➖➖➖➖➖➖➖➖\n\n"
+    text += f"{emoji} 🇵🇱 <b>{data['word_polish']}</b>\n"
+    text += f"    🇺🇦 <b>{data['word_ukrainian']}</b>\n\n"
     
     if data.get('word_example'):
-        text += f"<i>{data['word_example']}</i>"
+        text += f"<i>{data['word_example']}</i>\n\n"
     
-    text += "\n\n"
+    text += "➖➖➖➖➖➖➖➖"
     
     await callback.message.edit_text(
         text,

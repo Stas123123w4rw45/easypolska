@@ -168,7 +168,6 @@ def get_flashcard_feedback_keyboard() -> InlineKeyboardMarkup:
     keyboard = InlineKeyboardMarkup(inline_keyboard=[
         [InlineKeyboardButton(text="✅", callback_data="flashcard_know"),
          InlineKeyboardButton(text="❌", callback_data="flashcard_dont_know")],
-        [InlineKeyboardButton(text="➡️", callback_data="flashcard_next")],
         [InlineKeyboardButton(text="🗑️", callback_data="flashcard_delete")]
     ])
     return keyboard
