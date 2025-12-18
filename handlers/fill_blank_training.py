@@ -149,7 +149,7 @@ async def show_fill_blank_question(callback: CallbackQuery, state: FSMContext):
     
     # Add Ukrainian translation in spoiler if available
     if question_data.sentence_translation:
-        question_text += f"\n<spoiler>🇺🇦 {question_data.sentence_translation}</spoiler>"
+        question_text += f"\n<tg-spoiler>🇺🇦 {question_data.sentence_translation}</tg-spoiler>"
     
     await callback.message.answer(
         question_text,

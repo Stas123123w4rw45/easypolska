@@ -102,14 +102,24 @@ async def load_initial_words():
         except Exception as e:
             logger.warning(f"Migration warning: {e}")
         
-        # Add words if they don't exist
+        # Add or update words
         added_count = 0
+        updated_count = 0
         for word_data in words_data:
             # Check if word already exists
             existing = await session.execute(
                 select(Vocabulary).where(Vocabulary.word_polish == word_data['word_polish'])
             )
-            if existing.scalar_one_or_none():
+            existing_word = existing.scalar_one_or_none()
+            
+            if existing_word:
+                # Update existing word with new fields (emoji, example)
+                if not existing_word.emoji and word_data.get('emoji'):
+                    existing_word.emoji = word_data.get('emoji')
+                    updated_count += 1
+                if not existing_word.example_sentence_pl and word_data.get('example_sentence_pl'):
+                    existing_word.example_sentence_pl = word_data.get('example_sentence_pl')
+                    updated_count += 1
                 continue
             
             word = Vocabulary(
@@ -125,7 +135,7 @@ async def load_initial_words():
             added_count += 1
         
         await session.commit()
-        logger.info(f"✅ Loaded {added_count} new vocabulary words")
+        logger.info(f"✅ Loaded {added_count} new words, updated {updated_count} existing")
 
 
 
