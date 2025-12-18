@@ -134,10 +134,14 @@ async def show_translation(callback: CallbackQuery, state: FSMContext):
     await callback.answer()
 
 
-@router.callback_query(F.data == "flashcard_know", FlashcardLearning.show_translation)
+@router.callback_query(F.data == "flashcard_know")
 async def handle_know_button(callback: CallbackQuery, state: FSMContext):
     """Handle 'I know this word' button press."""
     data = await state.get_data()
+    
+    if not data.get('current_stats_id'):
+        await callback.answer("❌")
+        return
     
     session_maker = models.get_session_maker()
     async with session_maker() as session:
@@ -154,15 +158,54 @@ async def handle_know_button(callback: CallbackQuery, state: FSMContext):
     
     await callback.answer("✅")
     
-    # Automatically show next word
+    # Go to next word - use new message for reliable display
     await state.set_state(FlashcardLearning.show_word)
-    await show_next_word(callback, state)
+    
+    # Get and show next word directly
+    async with session_maker() as session:
+        query = select(User).where(User.telegram_id == callback.from_user.id)
+        result = await session.execute(query)
+        user = result.scalar_one_or_none()
+        
+        word_data = await flashcard_service.get_next_word_for_user(session, user.id)
+        
+        if not word_data:
+            await callback.message.edit_text(
+                "🎉 <b>Відмінно!</b>\n\nВсі слова на сьогодні вивчено!",
+                reply_markup=get_main_menu_keyboard(),
+                parse_mode='HTML'
+            )
+            return
+        
+        word, stats = word_data
+        
+        await state.update_data(
+            current_word_id=word.id,
+            current_stats_id=stats.id,
+            word_polish=word.word_polish,
+            word_ukrainian=word.translation_ua,
+            word_example=word.example_sentence_pl,
+            word_emoji=word.emoji
+        )
+    
+    emoji = word.emoji if word.emoji else "📝"
+    text = f"➖➖➖➖➖➖➖➖\n\n{emoji} <b>{word.word_polish}</b>\n\n➖➖➖➖➖➖➖➖"
+    
+    await callback.message.edit_text(
+        text,
+        reply_markup=get_flashcard_word_keyboard(),
+        parse_mode='HTML'
+    )
 
 
-@router.callback_query(F.data == "flashcard_dont_know", FlashcardLearning.show_translation)
+@router.callback_query(F.data == "flashcard_dont_know")
 async def handle_dont_know_button(callback: CallbackQuery, state: FSMContext):
     """Handle 'I don't know this word' button press."""
     data = await state.get_data()
+    
+    if not data.get('current_stats_id'):
+        await callback.answer("❌")
+        return
     
     session_maker = models.get_session_maker()
     async with session_maker() as session:
@@ -185,9 +228,43 @@ async def handle_dont_know_button(callback: CallbackQuery, state: FSMContext):
     
     await callback.answer("📝")
     
-    # Automatically show next word
+    # Go to next word - inline logic for reliability
     await state.set_state(FlashcardLearning.show_word)
-    await show_next_word(callback, state)
+    
+    async with session_maker() as session:
+        query = select(User).where(User.telegram_id == callback.from_user.id)
+        result = await session.execute(query)
+        user = result.scalar_one_or_none()
+        
+        word_data = await flashcard_service.get_next_word_for_user(session, user.id)
+        
+        if not word_data:
+            await callback.message.edit_text(
+                "🎉 <b>Відмінно!</b>\n\nВсі слова на сьогодні вивчено!",
+                reply_markup=get_main_menu_keyboard(),
+                parse_mode='HTML'
+            )
+            return
+        
+        word, stats = word_data
+        
+        await state.update_data(
+            current_word_id=word.id,
+            current_stats_id=stats.id,
+            word_polish=word.word_polish,
+            word_ukrainian=word.translation_ua,
+            word_example=word.example_sentence_pl,
+            word_emoji=word.emoji
+        )
+    
+    emoji = word.emoji if word.emoji else "📝"
+    text = f"➖➖➖➖➖➖➖➖\n\n{emoji} <b>{word.word_polish}</b>\n\n➖➖➖➖➖➖➖➖"
+    
+    await callback.message.edit_text(
+        text,
+        reply_markup=get_flashcard_word_keyboard(),
+        parse_mode='HTML'
+    )
 
 
 @router.callback_query(F.data == "flashcard_delete")

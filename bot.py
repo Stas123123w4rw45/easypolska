@@ -113,13 +113,12 @@ async def load_initial_words():
             existing_word = existing.scalar_one_or_none()
             
             if existing_word:
-                # Update existing word with new fields (emoji, example)
-                if not existing_word.emoji and word_data.get('emoji'):
+                # ALWAYS update emoji and example from JSON
+                if word_data.get('emoji'):
                     existing_word.emoji = word_data.get('emoji')
-                    updated_count += 1
-                if not existing_word.example_sentence_pl and word_data.get('example_sentence_pl'):
+                if word_data.get('example_sentence_pl'):
                     existing_word.example_sentence_pl = word_data.get('example_sentence_pl')
-                    updated_count += 1
+                updated_count += 1
                 continue
             
             word = Vocabulary(
